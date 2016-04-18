@@ -1,0 +1,32 @@
+@require '../fonts/playfair/playfair.styl'
+
+navHeight=75px
+navExpanderHeight=300px
+orange=rgb(198, 111, 33)
+gray=rgb(59, 55, 54)
+darkGray=rgb(48, 44, 43)
+lighterGray=rgb(69, 55, 54)
+red=orange
+lightGray=rgb(162, 162,162)
+lightDark=rgb(100, 100, 100)
+transitionDuration=0.4s
+sprite(icon)
+	background url('../images/icons/icons.svg')
+	background-size 100%
+	background-position 0 unit((icon * 24), 'px')
+
+arrow(dir='up', color=gray, size=6px)
+	width 0
+	height 0
+	border-top size solid transparent
+	border-left size solid transparent
+	border-right size solid transparent
+	border-bottom size solid transparent
+	if dir is 'up'
+		border-bottom size solid color
+	if dir is 'left'
+		border-right size solid color
+	if dir is 'right'
+		border-left size solid color
+	if dir is 'down'
+		border-top size solid color

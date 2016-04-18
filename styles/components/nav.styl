@@ -1,0 +1,275 @@
+.container-fluid>nav
+	background white
+	position fixed
+	top 0
+	width 100%
+	z-index 200
+	.container-fluid
+		padding 0
+		position relative
+		.left-bar
+			background gray
+			position relative // To let z-index work
+			padding 0
+			z-index 203
+			.logo-wrap
+				display inline-block
+				.logo
+					display block
+					height 100%
+			.toggle-button-wrap
+				absolute right 0
+				display inline-block
+				height 100%
+				cursor pointer
+				.toggle-button
+					width 20px
+					height 20px
+					margin (navHeight/2 - 10px) 0 (navHeight/2 - 10px) 0
+					position relative
+					.line
+						transform-origin 50% 50%
+						transition all transitionDuration ease
+						transform-style flat
+						height 2px
+						background white
+						width 20px
+						transform rotate(0deg)
+						&-1
+							absolute top 0
+						&-2
+							opacity 1
+							absolute top 8px
+						&-3
+							absolute top 16px
+					&.open
+						.line
+							absolute top 9px left -4px
+							&-1
+								width 28px
+								transform rotate(45deg)
+							&-2
+								opacity 0
+							&-3
+								width 28px
+								transform rotate(-45deg)
+		.news-bar
+			cursor pointer
+			padding 0 0 0 15px
+			height 100%
+			display inline-block
+			.news-wrap
+				width 100%
+				height 100%
+				line-height navHeight
+				span.news-title
+					margin-left 0.5em
+		.middle-bar
+			background gray
+			z-index 202
+			transition all transitionDuration ease
+		.booking-bar
+			padding 0
+			font-size 16px
+			line-height navHeight
+			.selects-wrap
+				font-family playfair
+				font-style italic
+				.arrival-date
+				.nights
+					padding 0 5px
+					height 100%
+					display inline-block
+					position relative
+					.arrow-up
+						arrow('up', gray, 6px)
+						absolute bottom 0
+						left calc(50% - 6px)
+						opacity 0
+						transition opacity transitionDuration ease
+						&.open
+							opacity 1
+				.arrival-date
+					cursor pointer
+					.arrival-date-output
+						font-weight bold
+				.nights
+					cursor pointer
+					.nights-output
+						font-weight bold
+				.trending-down
+					display inline-block
+					height 0.75em
+					width 1em
+					background url('../images/icons/trending-down-gray.svg')
+					background-position bottom
+			.book-wrap
+				cursor pointer
+				background orange
+				padding 0
+				span
+					display inline-block
+					width 100%
+					color white
+					text-align center
+					text-transform uppercase
+				.arrow-right
+					absolute top unit((navHeight/2) - 6, 'px')
+					arrow('right', white, 6px)
+
+@media(max-width $screen-md)
+	body
+		padding-top navHeight*3 // Height of .left-bar = height of .selects-wrap = height of .book-wrap = navHeight
+	nav
+		.left-bar
+			width 100%
+			height navHeight
+			.logo-wrap
+				width 50%
+				height 100%
+				.logo
+					float right
+			.toggle-button-wrap
+				width 50%
+		.middle-bar
+			width 100%
+			absolute top -300%
+			.links
+				margin-left 'calc(50% - %s)' % navHeight
+				width unit(navHeight*2, 'px')
+				padding-bottom 2em
+				.link
+					text-transform uppercase
+					cursor pointer
+					display block
+					border-bottom 1px solid lightGray
+					padding 2em 0 0.25em 0
+					color lightGray
+					.link-text-wrap
+						display block
+						width 100%
+						height 100%
+						position relative
+						.link-icon
+							width 1em
+							height 1em
+							background url('../../images/icons/arrow-down-gray.svg')
+							background-size 100%
+							absolute right 0 bottom 0.25em
+					&:hover
+						color white
+						border-bottom 1px solid white
+						.link-icon
+							background url('../../images/icons/arrow-down-white.svg')
+							background-size 100%
+				.services-link
+					.arrow-up
+						arrow('up', white, 6px)
+						opacity 0
+						transition opacity transitionDuration ease
+						absolute bottom
+						left calc(50% - 3px)
+						&.open
+							opacity 1
+			&.open
+				top navHeight
+		.booking-bar
+			width 100%
+			.selects-wrap
+			.book-wrap
+				text-align center
+				height navHeight
+			.book-wrap
+				width 40%
+				left 30%
+				.arrow-right
+					display none
+
+@media(min-width $screen-md)
+	body
+		padding-top navHeight
+	nav
+		.container-fluid
+			height navHeight
+			.left-bar
+				display inline-block
+				height @height
+				.logo-wrap
+					width 70%
+					height @height
+					.logo
+						width 100%
+				.toggle-button-wrap
+					width 30%
+			.middle-bar
+				display inline-block
+				height @height
+				width 74%
+				absolute left -65.7%
+				.links
+					padding 0
+					margin 0 0 0 2%
+					height 100%
+					.link
+						display inline-block
+						height 100%
+						position relative
+						overflow visible
+						.link-text-wrap
+							padding 0 20px
+							display inline-block
+							text-transform uppercase
+							text-align center
+							width 100%
+							height 100%
+							cursor pointer
+							position relative
+							cursor pointer
+							.arrow-up
+								arrow('up', white, 6px)
+								opacity 0
+								transition opacity transitionDuration ease
+								absolute bottom
+								left calc(50% - 3px)
+								&.open
+									opacity 1
+							.link-text
+								display inline-block
+								position relative
+								top calc(50% - 0.75em)
+								color lightGray
+								img
+									display none
+							&:hover .link-text
+								color white
+								border-bottom 1px solid white
+							&::after
+								content ''
+								display inline-block
+								width 2px
+								height 2px
+								background white
+								absolute top unit(sum(navHeight/2, -2), 'px') right 1px
+						&:last-child .link-text-wrap::after
+						&:last-child .link-text-wrap:after
+							display none
+				&.open
+					absolute left 8.3%
+			.booking-bar
+				height 100%
+				.selects-wrap
+				.book-wrap
+					height navHeight
+				.selects-wrap
+					font-family playfair
+					font-style italic
+				.book-wrap
+					span
+						display inline-block
+						width 100%
+						color white
+						text-align center
+						text-transform uppercase
+@media(max-width $screen-lg)
+	.news-bar
+		display none !important

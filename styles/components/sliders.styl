@@ -1,0 +1,274 @@
+.slider-wrap
+	position relative
+	width 100%
+	.slider
+		height 38vw
+		overflow hidden
+		position relative
+		.slides
+			width 100%
+			height 100%
+			absolute left 0
+			transition left transitionDuration ease
+			.slide
+				width 100%
+				height 100%
+				overflow hidden
+				absolute top 0
+				img
+					width 120%
+					absolute left 0 top 0
+	.caption
+		position relative
+		.slider-controls-wrapper
+			position relative
+			.slider-controls
+				.button
+					background rgba(orange, 0.75)
+					width 50px
+					height 50px
+					transition all 0.1s linear
+					cursor pointer
+		.caption-inner
+			background gray
+			position relative
+			.line-wrapper
+				position relative
+				width 100%
+				height 100px
+				.line
+					height 1px
+					width 15%
+					absolute left 42.5%
+					top 50%
+					background white
+			.slider-nav
+				width 10%
+				height 25%
+				absolute top 37.5%
+				span
+					font-size 2em
+					font-family 'Playfair Display'
+					font-weight bold
+					display inline-block
+				.current-slide
+					text-align left
+					color white
+					absolute top 0 left 10%
+					height 40%
+					width 80%
+				.line
+					width 100%
+					absolute top 50%
+					height 2px
+					background white
+					transform-style flat
+					transform-origin center center
+					transform rotate(-30deg)
+				.slides-num
+					width 80%
+					height 40%
+					color lightGray
+					absolute bottom 0 right 10%
+					text-align right
+			.desc
+				width 80%
+				relative top 0
+				color white
+				padding 0 1em 5em 0
+				.header
+					font-size 2em
+					font-family 'Playfair Display'
+					font-style italic
+				.list-header
+					display block
+					margin-top 1.5em
+				ul
+					list-style none
+					padding 0
+					li:before
+					li::before
+						content '- '
+.separate-slide
+	width 50%
+	margin 5% auto
+	height auto
+	.list-header
+		display block
+		margin 0 0 0 10%
+	ul
+		padding 0
+		margin 0 0 0 10%
+		list-style none
+		li:before
+		li::before
+			content '- '
+	img
+		margin-top 1em
+		width 100%
+
+@media(max-width $screen-lg)
+	.slider-left
+	.slider-right
+		.slider
+			relative left 0
+		.caption
+			.slider-nav
+				left 5%
+			.desc
+				left 20%
+	.slider-wrap
+		margin-top 10%
+		.slider
+			width 100%
+		.caption
+			width 70%
+			min-height 30vw
+			margin -15% auto 0 auto
+			.slider-controls-wrapper
+				position relative
+				top 0
+				width 100%
+				height 50px
+				.slider-controls
+					absolute left 50%
+					height 100%
+					width 150px
+					margin-left -75px
+					.button
+						.arrow-wrap
+							width calc(100% - 10px)
+							height 12px
+							absolute top 23px
+							.arrow-line
+								height 2px
+								width calc(100% - 4px)
+								background white
+								absolute top 4px
+							.arrow-end
+								absolute top 0
+						&-prev
+							absolute right 75px
+							.arrow-wrap
+								right 5px
+								.arrow-line
+									right 0
+								.arrow-end
+									arrow('left', white, 6px)
+									left -6px
+						&-next
+							absolute left 75px
+							.arrow-wrap
+								left 5px
+								.arrow-line
+									left 0
+								.arrow-end
+									arrow('right', white, 6px)
+									right -6px
+						&:hover
+							width 65px
+			.caption-inner
+				width 100%
+				height 100%
+	.separate-slide
+		width 70%
+		margin 5% auto 0 auto
+
+@media(min-width $screen-lg)
+	.slider-left
+		.slider
+			relative left 0
+		.caption
+			absolute left 45%
+			.caption-inner
+				absolute right 0
+				.slider-nav
+					left 5%
+				.desc
+					left 20%
+			.slider-controls-wrapper
+				absolute top 0 left 0
+				.slider-controls
+					absolute right 0
+	.slider-right
+		.slider
+			margin-left 45%
+		.caption
+			absolute right 45%
+			.slider-nav
+				right 5%
+			.desc
+				left 5%
+			.slider-controls-wrapper
+				absolute top 0 right 0
+	.slider-wrap
+		margin-top 5%
+		.slider
+			width 55%
+		.caption
+			width calc(40% + 50px)
+			max-width 45%
+			top 20%
+			height 60%
+			.slider-controls-wrapper
+				width 50px
+				height 100%
+				.slider-controls
+					width 50px
+					height 150px
+					absolute top 50%
+					margin-top -75px
+					.button
+						absolute left 0
+						.arrow-wrap
+							width 12px
+							height calc(100% - 10px)
+							absolute left 19px
+							.arrow-line
+								width 2px
+								height calc(100% - 4px)
+								background white
+								absolute left 5px
+							.arrow-end
+								absolute left 0
+						&-prev
+							absolute top 75px
+							.arrow-wrap
+								top 5px
+								.arrow-line
+									top 0
+								.arrow-end
+									arrow('down', white, 6px)
+									bottom -6px
+						&-next
+							absolute bottom 75px
+							.arrow-wrap
+								bottom 5px
+								.arrow-line
+									bottom 0
+								.arrow-end
+									arrow('up', white, 6px)
+									top -6px
+						&:hover
+							height 65px
+			.caption-inner
+				top 0
+				width calc(100% - 50px)
+				height 100%
+	.separate-slide
+		width 40%
+		height auto
+		&-left
+			margin 5% 0 0 calc(15% - 50px)
+		&-right
+			margin 5% 0 0 calc(45% + 50px)
+
+
+@media(max-width $screen-md)
+	.caption
+	.separate-slide
+		width 80% !important
+@media(max-width $screen-sm)
+	.caption
+	.separate-slide
+		width 90% !important

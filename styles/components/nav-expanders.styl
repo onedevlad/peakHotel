@@ -1,0 +1,168 @@
+.services-expander
+	opacity 0
+	transition opacity transitionDuration ease
+	padding 0
+	margin 0
+	width 40%
+	height (navExpanderHeight/2.5)*2
+	fixed top 0 left -100%
+	z-index 300
+	&.open
+		opacity 1
+	.expander-arrow
+		relative top 0
+		left calc(50% - 6px)
+		arrow('up', white, 6px)
+	.expander-inner
+		background white
+		width 100%
+		height calc(100% - 12px)
+		.services-img
+		.services-list
+			padding 0
+		.services-img
+			height 100%
+			img
+				width 90%
+				absolute top 0 left 0 right 0 bottom 0
+				margin auto
+	.services-list
+		height 100%
+		.list-wrap
+			display block
+			width 100%
+			height 100%
+			.list
+				display inline-block
+				padding 7.5% 0 0 15%
+				text-transform uppercase
+				line-height 3em
+				list-style-type none
+				span
+					margin 0
+					cursor pointer
+					&:hover
+						border-bottom 1px solid gray
+
+.nights-expander
+	padding 0
+	width 20%
+	fixed top 0 left -100%
+	text-align center
+	transition opacity transitionDuration ease
+	opacity 0
+	&.open
+		opacity 1
+		z-index 300
+	.expander-arrow
+		relative top 0
+		left calc(50% - 6px)
+		arrow('up', gray, 6px)
+	.expander-inner
+		ul
+			background gray
+			padding 0
+			margin 0
+			list-style-type none
+			li
+				color lightDark
+				line-height 2em
+				display block
+				height 2em
+				cursor pointer
+				span
+					padding 0.25em 0.5em
+					border-radius 50%
+					&.chosen
+						background lighterGray
+						color white
+				&:first-child
+				&:last-child
+					height 3em
+				&:first-child
+					padding 1em 0 0 0
+				&:last-child
+					padding 0 0 1em 0
+				&:hover span
+					color white
+
+.reply-expander
+	padding 0
+	width 20%
+	fixed top 0 left -100%
+	text-align center
+	transition opacity transitionDuration ease
+	opacity 0
+	color white
+	&.open
+		opacity 1
+		z-index 300
+	.expander-arrow
+		relative top 0
+		left calc(50% - 6px)
+		arrow('up', gray, 6px)
+	.expander-inner
+		.reply-wrap
+			padding 0 0 10% 0
+			background gray
+			.header
+			.guests
+			.costs
+				display block
+				line-height 3em
+			.header
+				text-transform uppercase
+				line-height 5em
+			.orderButton
+				margin 10% auto 0 auto
+				width 90%
+				height 5em
+				position relative
+				cursor pointer
+				.button-wrap
+					width 90%
+					height 100%
+					border 2px solid orange
+					absolute left 5%
+				.button-inner
+					width calc(90% - 12px)
+					height calc(100% - 12px)
+					absolute top 6px
+					left calc(5% + 6px)
+					background orange
+					transition all transitionDuration ease
+					.button-text
+						text-transform uppercase
+						display inline-block
+						width 50%
+						height 100%
+						absolute left 0
+						span
+							display block
+							width 100%
+							height 1.5em
+							text-align right
+							absolute top 0 bottom 0
+							margin auto 0
+							padding-right 10%
+					.button-arrow
+						width 50%
+						height 100%
+						absolute left 50%
+						.arrow-wrap
+							absolute top 0 bottom 0
+							margin auto 0
+							width 40%
+							height 13px
+							.arrow-line
+								background white
+								width calc(100% - 10px)
+								height 3px
+								absolute top 5px left 0
+							.arrow-end
+								arrow('right', white, 6px)
+								absolute right 0
+				&:hover
+					.button-inner
+						left 0
+						width 100%

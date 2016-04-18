@@ -1,0 +1,170 @@
+@require './vars.styl'
+
+@require '../scripts/pickMeUp/css/pickmeup.styl'
+@require './bootstrap/index.styl'
+
+@require './components/nav.styl'
+@require './components/nav-expanders.styl'
+@require './components/sliders.styl'
+
+html
+body
+	width 100%
+	overflow-x hidden // Not sure if it will ever be needed
+
+.global-overlay
+	width 100%
+	height 100%
+	background rgba(black, 0.75)
+	fixed top left -100%
+	opacity 0
+	z-index 200
+	transition opacity transitionDuration ease
+	&.open
+		opacity 1
+		left 0
+
+body > .container-fluid
+	width 100%
+	padding 0
+	.row
+		margin 0
+.main-slider
+	margin 0
+	width 100%
+	.slide
+		width 100%
+		position relative
+		.overlay
+			position absolute
+			width 100%
+			height 100%
+			background rgba(black, 0.75)
+		.bg
+			z-index 0
+			width 100%
+		.slide-caption
+			absolute left 30% top 20%
+			display block
+			width 50%
+			color white
+			text-align center
+			h1
+				font-family 'Playfair Display'
+				font-style italic
+			span
+				text-transform uppercase
+
+@media(min-width $screen-lg)
+	footer
+		height 75px
+
+@media(max-width $screen-lg) and (min-width $screen-md)
+	footer
+		.col-social
+			.social-icons
+				width 40% !important
+		.weather-report
+			width 30% !important
+			.c
+				margin-left 1em !important
+@media(max-width $screen-md) and (min-width $screen-sm)
+	.col-social
+		.social-icons
+			width 60% !important
+
+footer
+	margin-top 5%
+	width 100%
+	padding-bottom 75px
+	overflow hidden
+	background gray
+	color lightGray
+	transition height transitionDuration ease
+	text-align center
+	position relative
+	.main-footer
+		z-index 2
+		.col
+			.col-header
+				color white
+				font-family 'Playfair Display'
+				font-style italic
+			.col-subheader
+				display inline-block
+				margin-top 2em
+		.col-social
+			.social-icons
+				width 75%
+				margin 2em auto 0 auto
+				display block
+				img
+					margin 0 auto
+					width 50%
+		.col-weather
+			.location
+				width 50%
+				margin-left 25%
+				span
+					text-align left
+					display block
+			.weather-report
+				width 50%
+				text-align left
+				margin 3em auto
+				.inner-wrap
+					font-size 2em
+					img
+						height 100%
+					.temperature
+						display inline-block
+						color white
+						margin-left 1em
+						font-family 'Display Playfair'
+					.units
+						span
+							cursor pointer
+							font-size 0.5em
+							display inline-block
+						.c
+							margin-left 2em
+							color white
+							border-bottom 1px solid lightGray
+						.f
+							margin-left 1em
+		.col-connect
+			.mail
+				margin-top 3em
+				display block
+				color orange
+			.tel
+				margin 3em 0
+				display block
+				color white
+	.subfooter
+		width 100%
+		z-index 4
+		absolute bottom 0
+		margin-top 5%
+		background darkGray
+		height 75px
+		color lightGray
+		.col
+			height 100%
+		.col-rights
+		.col-devs
+			&>span
+				width 100%
+				display inline-block
+				height 75px
+				line-height 75px
+				text-align center
+		.col-slide
+			img
+				cursor pointer
+				height 45px
+				display block
+				margin 15px auto
+		.col-devs
+			img
+				margin-left 0.5em
