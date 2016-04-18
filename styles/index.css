@@ -7105,7 +7105,7 @@ button.close {
   display: inline-block;
   height: 0.75em;
   width: 1em;
-  background: url("../images/icons/trending-down-gray.svg");
+  background: url("./images/icons/trending-down-gray.svg");
   background-position: bottom;
 }
 .container-fluid>nav .container-fluid .booking-bar .book-wrap {
@@ -7176,7 +7176,7 @@ button.close {
   nav .middle-bar .links .link .link-text-wrap .link-icon {
     width: 1em;
     height: 1em;
-    background: url("../../images/icons/arrow-down-gray.svg");
+    background: url("../images/icons/arrow-down-gray.svg");
     background-size: 100%;
     position: absolute;
     right: 0;
@@ -7187,7 +7187,7 @@ button.close {
     border-bottom: 1px solid #fff;
   }
   nav .middle-bar .links .link:hover .link-icon {
-    background: url("../../images/icons/arrow-down-white.svg");
+    background: url("../images/icons/arrow-down-white.svg");
     background-size: 100%;
   }
   nav .middle-bar .links .services-link .arrow-up {
