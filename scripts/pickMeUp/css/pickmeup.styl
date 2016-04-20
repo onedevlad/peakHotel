@@ -1,3 +1,4 @@
+
 /**
  * @package   PickMeUp - jQuery datepicker plugin
  * @author    Nazar Mokrynskyi <nazar@mokrynskyi.com>
@@ -6,10 +7,10 @@
  * @copyright Copyright (c) 2008-2009, Stefan Petre
  * @license   MIT License, see license.txt
  */
-@import '../../../styles/vars.styl'
+
 $border-radius = 0
 $background = gray
-$color = darkGray
+$color = lightGray
 $month-color = white
 $background-hover = "transparent"
 $color-hover = white
@@ -33,7 +34,7 @@ $today-color = $color-hover
   border-radius $border-radius
   -moz-box-sizing content-box
   box-sizing content-box
-  absolute left -100%
+  fixed left -100% top -100%
   &.open
     opacity 1
   *

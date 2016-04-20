@@ -1,6 +1,8 @@
 doctype
 html
 	head
+		meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
+		meta(charset='utf-8')
 		title Peak Hotel
 		link(rel='stylesheet', type='text/css', href='./styles/index.css')
 		script(src='./scripts/jquery.js')
@@ -73,7 +75,7 @@ html
 						.news-wrap
 							img(src='./images/icons/note.svg' alt='Note')
 							span.news-title News
-					.middle-bar
+					.middle-bar.open
 						.links
 							.link
 								span.link-text-wrap
@@ -99,7 +101,7 @@ html
 								span.link-text-wrap
 									span.link-text Contact
 										span.link-icon
-					.booking-bar.col-lg-6.col-md-8.pull-right
+					.booking-bar.col-lg-6.col-md-9.pull-right
 						.container-fluid
 							.selects-wrap.col-lg-8.col-md-8
 								span.arrival-date.col-xs-6
@@ -112,8 +114,9 @@ html
 										span.nights-output 1
 										span.trending-down
 							.book-wrap.col-lg-4.col-md-4
-								.arrow-right
-								span Book your stay
+								.inner-wrap
+									.arrow-right
+									span Book your stay
 			.main-slider.row
 				.slide
 					.overlay

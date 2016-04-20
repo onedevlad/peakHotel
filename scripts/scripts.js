@@ -1,36 +1,72 @@
-var expanderHideDelay=400
-var expanderHideTimeout
-var sliders=[]
+var expanderHideTimeout, transitionDuration, sliders, navExpandedHeight, middleBarHeight, screens, states, navExpanders, init
 
-var navExpanders={
+transitionDuration=400
+expanderHideTimeout
+sliders=[]
+navExpandedHeight=0
+middleBarHeight=0
+
+screens={
+	xs: 480,
+	sm: 750,
+	md: 970,
+	lg: 1170,
+	current: 0,
+}
+
+states={
+	nav: {
+		middleBarOpen: false
+	},
+	navExpanders: {
+		servicesOpen: false,
+		nightsOpen: false,
+		replyOpen: false
+	}
+}
+
+navExpanders = {
 	services: {
 		coords: {
 			x: 0,
 			y: 0,
 		},
 		init: function(){
-			var navWidth=$('nav').width()
-			var servicesLinkCenter=$('.services-link').offset().left + $('.services-link').outerWidth()/2
-			var servicesExpanderTop=$('.services-link').get(0).getBoundingClientRect().top + $('.services-link').outerHeight() - 12
-			var servicesExpanderLeft=servicesLinkCenter - $('.services-expander').outerWidth()/2
-			navExpanders.services.coords.x=servicesExpanderLeft
-			navExpanders.services.coords.y=servicesExpanderTop
+			var navWidth, servicesLinkCenter, servicesExpanderTop, servicesExpanderLeft, $nav, $servicesLink, $servicesExpander
+
+			$nav=$('nav')
+			servicesLink=$('.services-link')
+			servicesExpander=$('.services-expander')
+			navWidth = $nav.width()
+			servicesLinkCenter = $servicesLink.offset().left + $servicesLink.outerWidth()/2
+			servicesExpanderTop = $servicesLink.get(0).getBoundingClientRect().top + $servicesLink.outerHeight() - 12
+			servicesExpanderLeft = servicesLinkCenter - $servicesExpander.outerWidth()/2
+			navExpanders.services.coords.x = servicesExpanderLeft
+			navExpanders.services.coords.y = servicesExpanderTop
 		},
 		show: function(){
+			var $globalOverlay, $servicesExpander
+
+			$globalOverlay=$('.global-overlay')
+			$servicesExpander=$('.services-expander')
 			navExpanders.services.init()
 			clearInterval(expanderHideTimeout)
-			$('.global-overlay').addClass('open')
-			$('.services-expander').css({'left': navExpanders.services.coords.x+'px', 'top': navExpanders.services.coords.y+'px'})
-			$('.services-expander').addClass('open')
+			$globalOverlay.addClass('open')
+			$servicesExpander.css({'left': navExpanders.services.coords.x+'px', 'top': navExpanders.services.coords.y+'px'})
+			$servicesExpander.addClass('open')
 		},
 		hide: function(){
+			var $globalOverlay, $servicesExpander
+
+			$globalOverlay=$('.global-overlay')
+			$servicesExpander=$('.services-expander')
 			expanderHideTimeout=setTimeout(function(){
-				$('.global-overlay').removeClass('open')
-				$('.services-expander').removeClass('open')
+				$globalOverlay.removeClass('open')
+				$servicesExpander.removeClass('open')
 				expanderHideTimeout=setTimeout(function(){
-					$('.services-expander').css({'left': '-100%'})
-				}, expanderHideDelay)
-			}, expanderHideDelay)
+					$servicesExpander.css({'left': '-100%'})
+				}, transitionDuration)
+			}, transitionDuration)
 		},
 	},
 	nights: {
@@ -40,31 +76,47 @@ var navExpanders={
 			y: 0
 		},
 		init: function(){
-			$('.nights-expander').css({width: ($('.nights').width())+'px'})
-			navExpanders.nights.coords.x=$('.nights').offset().left
-			navExpanders.nights.coords.y=$('.nights').get(0).getBoundingClientRect().top+$('.nights').outerHeight() - 10
+			var $nightsExpander, $nights
+
+			$nightsExpander=$('.nights-expander')
+			$nights=$('.nights')
+			$nightsExpander.css({width: ($nights.width())+'px'})
+			navExpanders.nights.coords.x=$nights.offset().left
+			navExpanders.nights.coords.y=$nights.get(0).getBoundingClientRect().top+$nights.outerHeight() - 12
 		},
 		click: function(){
-			$(this).parent().find('.chosen').removeClass('chosen')
+			var $chosen, $nightsOutput
+
+			$chosen=$(this).parent().find('.chosen')
+			$nightsOutput=$('.nights .nights-output')
+			$chosen.removeClass('chosen')
 			$(this).find('span').addClass('chosen')
-			$('.nights .nights-output').html($(this).find('span').html())
+			$nightsOutput.html($(this).find('span').html())
 			navExpanders.nights.hide()
 		},
 		show: function(){
+			var $html, $nightsExpander
+
+			$html=$('html')
+			$nightsExpander=$('.nights-expander')
 			navExpanders.reply.hide()
 			clearInterval(expanderHideTimeout)
 			navExpanders.nights.visible=true
-			$('.nights-expander').css({'left': navExpanders.nights.coords.x+'px', 'top': navExpanders.nights.coords.y+'px'})
-			$('.nights-expander').addClass('open')
-			$('html').click(function(){navExpanders.nights.hide()})
+			$nightsExpander.css({'left': navExpanders.nights.coords.x+'px', 'top': navExpanders.nights.coords.y+'px'})
+			$nightsExpander.addClass('open')
+			$html.click(function(){navExpanders.nights.hide()})
 		},
 		hide: function(){
-			$('html').unbind('click')
+			var $html, $nightsExpander
+
+			$html=$('html')
+			$nightsExpander=$('.nights-expander')
+			$html.unbind('click')
 			navExpanders.nights.visible=false
-			$('.nights-expander').removeClass('open')
+			$nightsExpander.removeClass('open')
 			expanderHideTimeout=setTimeout(function(){
-				$('.nights-expander').css({'left': '-100%'})
-			}, expanderHideDelay)
+				$nightsExpander.css({'left': '-100%'})
+			}, transitionDuration)
 		},
 		toggle: function(){
 			if(navExpanders.nights.visible){
@@ -81,58 +133,70 @@ var navExpanders={
 			y: 0
 		},
 		init: function(){
-			var navWidth=$('nav').width()
-			var nightsRight=$('.nights').offset().left+$('.nights').width()
-			var dateLeft=$('.arrival-date').offset().left
-			var expanderWidth=$('.book-wrap').outerWidth()*1.5
-			var expanderLeft=$('.arrival-date').offset().left
-			$('.reply-expander').css({'width': expanderWidth+'px'})
-			var btnCenter=$('.book-wrap').offset().left+$('.book-wrap').outerWidth()/2
-			var potentionalLeft=btnCenter-expanderWidth/2
+			var $nav, $nights, $arrivalDate, $replyExpander, $bookWrap, navWidth, nightsRight, dateLeft, expanderWidth, expanderLeft, btnCenter, potentionalLeft
+
+			$nav=$('nav')
+			$nights=$('.nights')
+			$arrivalDate=$('.arrival-date')
+			$replyExpander=$('.reply-expander')
+			$bookWrap=$('.book-wrap')
+			navWidth=$nav.width()
+			nightsRight=$nights.offset().left+$nights.width()
+			dateLeft=$arrivalDate.offset().left
+			expanderWidth=$bookWrap.outerWidth()*1.5
+			$replyExpander.css({'width': expanderWidth+'px'})
+			expanderLeft=$arrivalDate.offset().left
+			btnCenter=$bookWrap.offset().left+$bookWrap.outerWidth()/2
+			potentionalLeft=btnCenter-expanderWidth/2
 			if(potentionalLeft+expanderWidth < navWidth){
 				expanderLeft=potentionalLeft
 			}
 			navExpanders.reply.coords.x=expanderLeft
-			navExpanders.reply.coords.y=$('.book-wrap').get(0).getBoundingClientRect().top+$('.nights').outerHeight() - 10
+			navExpanders.reply.coords.y=$bookWrap.get(0).getBoundingClientRect().top+$nights.outerHeight() - 12
 		},
 		show: function(){
+			var $replyExpander, $innerWrap, $arrowRight, $html, $bookWrap
+
+			$html=$('html')
+			$replyExpander=$('.reply-expander')
+			$bookWrap=$('.book-wrap')
+			$innerWrap=$bookWrap.find('.inner-wrap')
+			$arrowRight=$bookWrap.find('.arrow-right')
 			clearInterval(expanderHideTimeout)
 			navExpanders.nights.hide()
-			$('.reply-expander').addClass('open')
-			$('.reply-expander').css({'left': navExpanders.reply.coords.x+'px', 'top': navExpanders.reply.coords.y+'px'})
-			$('html').click(function(){navExpanders.reply.hide(false)})
+			$replyExpander.addClass('open')
+			$replyExpander.css({'left': navExpanders.reply.coords.x+'px', 'top': navExpanders.reply.coords.y+'px'})
+			if(states.nav.middleBarOpen){
+				$innerWrap.addClass('open')
+				$arrowRight.addClass('open')
+			}
+			$html.click(function(){navExpanders.reply.hide(false)})
 		},
 		hide: function(){
-			$('html').unbind('click')
-			$('.reply-expander').removeClass('open')
+			var $html, $replyExpander, $innerWrap, $arrowRight
+
+			$replyExpander=$('.reply-expander')
+			$bookWrap=$('.book-wrap')
+			$innerWrap=$bookWrap.find('.inner-wrap')
+			$arrowRight=$bookWrap.find('.arrow-right')
+			$html.unbind('click')
+			$replyExpander.removeClass('open')
+
+			$innerWrap.removeClass('open')
+			$arrowRight.removeClass('open')
+
 			expanderHideTimeout=setTimeout(function(){
-				$('.reply-expander').css({'left': '-100%'})
-			}, expanderHideDelay)
-		}
-	}
-}
-
-function initExpanders(){
-	navExpanders.services.init()
-	navExpanders.nights.init()
-	navExpanders.reply.init()
-}
-
-function initSliders(){
-	var left=100
-	var slidersLength=$('.slider').length
-	for(var i=0; i<slidersLength; i++){
-		sliders[i]={num: $('#slider'+i).find('.slide').length, current: 0}
-		for(var j=0; j<=sliders[i].num; j++){
-			$('#slider'+i).find('.slide').eq(j).css({'left': (left*j)+'%'})
-			$('#slider'+i).find('.slides-num').html(sliders[i].num)
+				$replyExpander.css({'left': '-100%'})
+			}, transitionDuration)
 		}
 	}
 }
 
 function updateSlider(slider, next){//dirention = next?'forward':'backward'
 	// NOTE: The 'num' key of a 'sliders[slider]' object represents the length, not the last index
-	var slideTo=next?(sliders[slider].current+1):(sliders[slider].current-1)
+	var slideTo
+
+	slideTo=next?(sliders[slider].current+1):(sliders[slider].current-1)
 	if(!next){
 		if(sliders[slider].current-1 < 0){
 			slideTo=sliders[slider].num-1
@@ -149,36 +213,105 @@ function updateSlider(slider, next){//dirention = next?'forward':'backward'
 	$('#slider'+slider).find('.slides').css({'left': left+'%'})
 }
 
+init={
+	nav: function(){
+		var $nav, $middleBar
+
+		$nav=$('nav')
+		$middleBar=$('nav .middle-bar')
+		navExpandedHeight=$nav.outerHeight()
+		middleBarHeight=$middleBar.outerHeight()
+		$middleBar.removeClass('open')
+	},
+	sliders: function(){
+		var left, slidersLength, i, j
+		left=100
+		slidersLength=$('.slider').length
+		for(i=0; i<slidersLength; i++){
+			sliders[i]={num: $('#slider'+i).find('.slide').length, current: 0}
+			for(j=0; j<=sliders[i].num; j++){
+				$('#slider'+i).find('.slide').eq(j).css({'left': (left*j)+'%'})
+				$('#slider'+i).find('.slides-num').html(sliders[i].num)
+			}
+		}
+	},
+	expanders: function(){
+		navExpanders.services.init()
+		navExpanders.nights.init()
+		navExpanders.reply.init()
+	},
+	screen: function(){
+		screens.current=$(window).outerWidth()
+	},
+	all: function(){
+		for(var key in init){
+			if(key === 'all'){
+				continue;
+			}
+			init[key]()
+		}
+	}
+}
+
 $(document).ready(function(){
-	initExpanders()
-	initSliders()
-	$(window).resize(function(){initExpanders(); $('html').click()})
+	var $window, $html, $toggleButtonWrap, $toggleButton, $middleBar, $body, $nights, $nightsExpander, $bookWrap, $replyExpander,
+		$servicesExpander, $nightsExpanderLi, $servicesLink, $footerUp, $slider
+
+	$window=$(window)
+	$html=$('html')
+	$body=$('body')
+	$toggleButtonWrap=$('.toggle-button-wrap')
+	$toggleButton=$('.toggle-button')
+	$middleBar=$('.middel-bar')
+	$nights=$('.nights')
+	$nightsExpander=$('.nights-expander')
+	$bookWrap=$('.book-wrap')
+	$replyExpander=$('.reply-expander')
+	$servicesExpander=$('.services-expander')
+	$nightsExpanderLi=$('.nights-expander li')
+	$servicesLink=$('.services-link')
+	$footerUp=$('#footer-up')
+	$slider=$('.slider')
+	init.all()
+	$(window).resize(function(){init.expanders(); init.screen(); init.nav(); $('html').click()})
 
 	$('.toggle-button-wrap').click(function(){
 		$(this).find('.toggle-button').toggleClass('open')
 		$('nav .middle-bar').toggleClass('open')
-	})
-
-	$('.nights, .nights-expander, .book-wrap, .reply-expander').click(function(){event.stopPropagation()})
-	$('.services-link').hover(navExpanders.services.show, navExpanders.services.hide)
-	$('.services-expander').hover(function(){clearInterval(expanderHideTimeout)}, function(){navExpanders.services.hide(true)})
-	$('.nights').click(navExpanders.nights.toggle)
-	$('.nights-expander li').click(navExpanders.nights.click)
-	$('.book-wrap').click(navExpanders.reply.show)
-	
-	if($(window).outerWidth() >= 1170){
-		$('#footer-up').click(function(){
-			var mainPartHeight=$('.main-footer').outerHeight()+75
-			$("html, body").animate({scrollTop: $(document).height()}, expanderHideDelay);
-			if($('footer').hasClass('open')){
-				$('footer').removeAttr('style')
+		states.nav.middleBarOpen=!states.nav.middleBarOpen
+		if(screens.current < screens.sm){
+			if($('nav .middle-bar').hasClass('open')){
+				$('nav .middle-bar').css({'max-height': middleBarHeight+'px'})
+				$('body').css({'padding-top': navExpandedHeight+'px'})
 			}
 			else{
-				$('footer').css({'height': mainPartHeight+'px'})
+				$('nav .middle-bar').removeAttr('style')
+				$('body').removeAttr('style')
 			}
-			$('footer').toggleClass('open')
-		})
-	}
+		}
+	})
+
+	$('.nights, .nights-expander, .book-wrap, .reply-expander').click(function(e){var e = e || event; e.stopPropagation()})
+	$('.services-expander').hover(function(){clearInterval(expanderHideTimeout)}, function(){navExpanders.services.hide(true)})
+
+	$('.nights-expander li').click(navExpanders.nights.click)
+	$('.nights').click(navExpanders.nights.toggle)
+	$('.book-wrap').click(navExpanders.reply.show)
+
+	$('.services-link').hover(navExpanders.services.show, navExpanders.services.hide)
+
+	$('#footer-up').click(function(){
+		var mainPartHeight=$('.main-footer').outerHeight()+75
+		$('body').animate({scrollTop: $(document).height()+10000}, transitionDuration);//10000 is set to scroll the page to its end
+		if($('footer').hasClass('open')){
+			$('footer').removeAttr('style')
+		}
+		else{
+			$('footer').css({'height': mainPartHeight+'px'})
+		}
+		$('footer').toggleClass('open')
+	})
+
 
 	$('.slider').each(function(i, el){
 		$('#slider'+i+'-prev').click(function(){
@@ -210,7 +343,7 @@ $(document).ready(function(){
 			$('.arrival-date .arrow-up').removeClass('open')
 			setTimeout(function(){
 				$('.pickmeup').css({'display': 'none'})
-			}, expanderHideDelay)
+			}, transitionDuration)
 		}
 	})
 })

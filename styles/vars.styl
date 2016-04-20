@@ -11,9 +11,11 @@ lightGray=rgb(162, 162,162)
 lightDark=rgb(100, 100, 100)
 transitionDuration=0.4s
 sprite(icon)
+	size=@height
 	background url('../images/icons/icons.svg')
-	background-size 100%
-	background-position 0 unit((icon * 24), 'px')
+	background-size size
+	background-repeat no-repeat
+	background-position 0 (0 - (icon * size))
 
 arrow(dir='up', color=gray, size=6px)
 	width 0

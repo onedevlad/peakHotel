@@ -717,7 +717,8 @@
 		if (force || !pickmeup.is(':visible')) {
 			var $this		= $(this),
 				options		= $this.data('pickmeup-options'),
-				pos			= $this.offset(),
+				pos			= this.getBoundingClientRect(),
+			//	pos			= $this.offset(),
 				viewport	= {
 					l : document.documentElement.scrollLeft,
 					t : document.documentElement.scrollTop,

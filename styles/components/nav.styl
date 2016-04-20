@@ -70,10 +70,10 @@
 			transition all transitionDuration ease
 		.booking-bar
 			padding 0
-			font-size 16px
 			line-height navHeight
 			.selects-wrap
-				font-family playfair
+				padding 0
+				font-family 'Playfair Display'
 				font-style italic
 				.arrival-date
 				.nights
@@ -101,21 +101,32 @@
 					display inline-block
 					height 0.75em
 					width 1em
-					background url('./images/icons/trending-down-gray.svg')
+					background url('../images/icons/trending-down-gray.svg')
 					background-position bottom
 			.book-wrap
-				cursor pointer
-				background orange
 				padding 0
-				span
-					display inline-block
-					width 100%
-					color white
-					text-align center
-					text-transform uppercase
-				.arrow-right
-					absolute top unit((navHeight/2) - 6, 'px')
-					arrow('right', white, 6px)
+				.inner-wrap
+					float right
+					cursor pointer
+					background orange
+					position relative
+					height 100%
+					transition width transitionDuration ease
+					&.open
+						width 100%
+					span
+						display inline-block
+						width 100%
+						color white
+						text-align center
+						text-transform uppercase
+					.arrow-right
+						arrow('right', white, 6px)
+						absolute top unit((navHeight/2) - 6, 'px')
+						opacity 1
+						transition opacity transitionDuration ease
+						&.open
+							opacity 0
 
 @media(max-width $screen-md)
 	body
@@ -133,7 +144,10 @@
 				width 50%
 		.middle-bar
 			width 100%
-			absolute top -300%
+			max-height 0
+			overflow hidden
+			&.open
+				max-height 500px
 			.links
 				margin-left 'calc(50% - %s)' % navHeight
 				width unit(navHeight*2, 'px')
@@ -171,8 +185,6 @@
 						left calc(50% - 3px)
 						&.open
 							opacity 1
-			&.open
-				top navHeight
 		.booking-bar
 			width 100%
 			.selects-wrap
@@ -182,8 +194,10 @@
 			.book-wrap
 				width 40%
 				left 30%
-				.arrow-right
-					display none
+				.inner-wrap
+					width 100%
+					.arrow-right
+						display none
 
 @media(min-width $screen-md)
 	body
@@ -204,8 +218,10 @@
 			.middle-bar
 				display inline-block
 				height @height
-				width 74%
-				absolute left -65.7%
+				width 76%
+				absolute left -67.7%
+				&.open
+					absolute left 8.3%
 				.links
 					padding 0
 					margin 0 0 0 2%
@@ -253,23 +269,23 @@
 						&:last-child .link-text-wrap::after
 						&:last-child .link-text-wrap:after
 							display none
-				&.open
-					absolute left 8.3%
 			.booking-bar
 				height 100%
 				.selects-wrap
 				.book-wrap
 					height navHeight
 				.selects-wrap
-					font-family playfair
+					font-family 'Playfair Display'
 					font-style italic
 				.book-wrap
-					span
-						display inline-block
-						width 100%
-						color white
-						text-align center
-						text-transform uppercase
+					.inner-wrap
+						width 90%
+						span
+							display inline-block
+							width 100%
+							color white
+							text-align center
+							text-transform uppercase
 @media(max-width $screen-lg)
 	.news-bar
 		display none !important
