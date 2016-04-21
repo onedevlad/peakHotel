@@ -73,33 +73,34 @@ html
 								.line.line-3
 					.news-bar.col-lg-1.col-md-1
 						.news-wrap
-							img(src='./images/icons/note.svg' alt='Note')
+							span.news-icon-wrap
+								.news-icon
 							span.news-title News
-					.middle-bar.open
+					.middle-bar
 						.links
 							.link
 								span.link-text-wrap
-									span.link-text Hotel
+									a(href='#').link-text Hotel
 										span.link-icon
 							.link
 								span.link-text-wrap
-									span.link-text Rooms
+									a(href='#').link-text Rooms
 										span.link-icon
 							.link
 								span.link-text-wrap
-									span.link-text Restaurant
+									a(href='#').link-text Restaurant
 										span.link-icon
 							.link.services-link
 								span.link-text-wrap
-									span.link-text Services
+									a(href='#').link-text Services
 										span.link-icon
 							.link
 								span.link-text-wrap
-									span.link-text Reviews
+									a(href='#').link-text Reviews
 										span.link-icon
 							.link
 								span.link-text-wrap
-									span.link-text Contact
+									a(href='#').link-text Contact
 										span.link-icon
 					.booking-bar.col-lg-6.col-md-9.pull-right
 						.container-fluid
@@ -283,13 +284,17 @@ html
 						span.col-subheader Social media
 						.social-icons.container-fluid
 							.col-xs-3
-								img(src='./images/icons/vk.svg')
+								a(href='#').icon-wrap
+									.icon.vk
 							.col-xs-3
-								img(src='./images/icons/fb.svg')
+								a(href='#').icon-wrap
+									.icon.fb
 							.col-xs-3
-								img(src='./images/icons/twitter.svg')
+								a(href='#').icon-wrap
+									.icon.twitter
 							.col-xs-3
-								img(src='./images/icons/trovit.svg')
+								a(href='#').icon-wrap
+									.icon.trovit
 					.col.col-weather.col-lg-4
 						h2.col-header Current weather
 						.location.col-subheader
@@ -301,20 +306,24 @@ html
 						.weather-report
 							.inner-wrap
 								img(src='./images/icons/weather.svg')
-								span.temperature -6
+								span.temperature
+									span.width-setter 999
+									span.c-value.open -6
+									span.f-value -20
 								span.units
-									span.c &#176;C
+									span.c.chosen &#176;C
 									span.f &#176;F
 					.col.col-connect.col-lg-4
 						h2.col-header Connect with us
 						span.mail pikhotel@gmail.com
 						span.tel Tel. 050 373 59 47
 				.subfooter.container-fluid
-					.col.col-rights.col-xs-4
+					.col.col-rights.col-xs-5.col-sm-4
 						span All right reserved
-					.col.col-slide.col-xs-4
+					.col.col-slide.col-xs-2.col-sm-4
 						img#footer-up(src='./images/icons/trending-up-orange.svg')
-					.col.col-devs.col-xs-4
+					.col.col-devs.col-xs-5.col-sm-4
 						span
 							span Made with passion by
-							img(src='./images/icons/dev-logo.svg')
+							span.logo-wrap
+								.logo.dev-logo

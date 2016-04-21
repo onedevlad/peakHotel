@@ -27,6 +27,7 @@ states={
 
 navExpanders = {
 	services: {
+		hideTimeout: null,
 		coords: {
 			x: 0,
 			y: 0,
@@ -50,7 +51,7 @@ navExpanders = {
 			$globalOverlay=$('.global-overlay')
 			$servicesExpander=$('.services-expander')
 			navExpanders.services.init()
-			clearInterval(expanderHideTimeout)
+			clearInterval(navExpanders.services.hideTimeout)
 			$globalOverlay.addClass('open')
 			$servicesExpander.css({'left': navExpanders.services.coords.x+'px', 'top': navExpanders.services.coords.y+'px'})
 			$servicesExpander.addClass('open')
@@ -60,16 +61,17 @@ navExpanders = {
 
 			$globalOverlay=$('.global-overlay')
 			$servicesExpander=$('.services-expander')
-			expanderHideTimeout=setTimeout(function(){
+			navExpanders.services.hideTimeout=setTimeout(function(){
 				$globalOverlay.removeClass('open')
 				$servicesExpander.removeClass('open')
-				expanderHideTimeout=setTimeout(function(){
+				navExpanders.services.hideTimeout=setTimeout(function(){
 					$servicesExpander.css({'left': '-100%'})
 				}, transitionDuration)
 			}, transitionDuration)
 		},
 	},
 	nights: {
+		hideTimeout: null,
 		visible: false,
 		coords: {
 			x: 0,
@@ -100,7 +102,7 @@ navExpanders = {
 			$html=$('html')
 			$nightsExpander=$('.nights-expander')
 			navExpanders.reply.hide()
-			clearInterval(expanderHideTimeout)
+			clearInterval(navExpanders.nights.hideTimeout)
 			navExpanders.nights.init()
 			navExpanders.nights.visible=true
 			$nightsExpander.css({'left': navExpanders.nights.coords.x+'px', 'top': navExpanders.nights.coords.y+'px'})
@@ -115,7 +117,7 @@ navExpanders = {
 			$html.unbind('click')
 			navExpanders.nights.visible=false
 			$nightsExpander.removeClass('open')
-			expanderHideTimeout=setTimeout(function(){
+			navExpanders.nights.hideTimeout=setTimeout(function(){
 				$nightsExpander.css({'left': '-100%'})
 			}, transitionDuration)
 		},
@@ -129,6 +131,7 @@ navExpanders = {
 		}
 	},
 	reply: {
+		hideTimeout: null,
 		coords: {
 			x: 0,
 			y: 0
@@ -163,16 +166,16 @@ navExpanders = {
 			$bookWrap=$('.book-wrap')
 			$innerWrap=$bookWrap.find('.inner-wrap')
 			$arrowRight=$bookWrap.find('.arrow-right')
-			clearInterval(expanderHideTimeout)
+			clearInterval(navExpanders.reply.hideTimeout)
+			navExpanders.reply.init()
 			navExpanders.nights.hide()
 			$replyExpander.addClass('open')
-			navExpanders.reply.init()
 			$replyExpander.css({'left': navExpanders.reply.coords.x+'px', 'top': navExpanders.reply.coords.y+'px'})
 			if(states.nav.middleBarOpen){
 				$innerWrap.addClass('open')
 				$arrowRight.addClass('open')
 			}
-			$html.click(function(){navExpanders.reply.hide(false)})
+			$html.click(function(){navExpanders.reply.hide()})
 		},
 		hide: function(){
 			var $html, $replyExpander, $innerWrap, $arrowRight
@@ -187,7 +190,7 @@ navExpanders = {
 			$innerWrap.removeClass('open')
 			$arrowRight.removeClass('open')
 
-			expanderHideTimeout=setTimeout(function(){
+			navExpanders.reply.hideTimeout=setTimeout(function(){
 				$replyExpander.css({'left': '-100%'})
 			}, transitionDuration)
 		}
@@ -221,9 +224,20 @@ init={
 
 		$nav=$('nav')
 		$middleBar=$('nav .middle-bar')
-		navExpandedHeight=$nav.outerHeight()
-		middleBarHeight=$middleBar.outerHeight()
-		$middleBar.removeClass('open')
+		$middleBar.css({'-webkit-transition': 'all 0s ease',
+						'-moz-transition': 'all 0s ease',
+						'transition': 'all 0s ease',
+						'position': 'fixed',
+						'left': '-100%',
+						'opacity': 0}).addClass('open')
+		setTimeout(function(){
+			middleBarHeight=$middleBar.outerHeight()
+			navExpandedHeight=$nav.outerHeight()+middleBarHeight
+			$middleBar.removeClass('open')
+			setTimeout(function(){
+				$middleBar.removeAttr('style')
+			}, transitionDuration)
+		}, 100)
 	},
 	sliders: function(){
 		var left, slidersLength, i, j
@@ -258,7 +272,7 @@ init={
 $(document).ready(function(){
 	var $window, $html, $toggleButtonWrap, $toggleButton, $middleBar, $body, $nights, $nightsExpander, $bookWrap, $replyExpander,
 		$servicesExpander, $nightsExpanderLi, $servicesLink, $footerUp, $mainFooter, $footer, $slider, $excludedClicks, $arrivalDate,
-		$arrivalDateOutput, $arrivalDateArrow, $pickmeup
+		$arrivalDateOutput, $arrivalDateArrow, $pickmeup, $temperature, $cf, resizeTimer
 
 	init.all()
 
@@ -279,12 +293,22 @@ $(document).ready(function(){
 	$footer=$('footer')
 	$mainFooter=$('.main-footer')
 	$slider=$('.slider'),
-	$arrivalDate=$('.arrival-date')
 	$arrivalDateArrow=$('.arrival-date .arrow-up')
 	$excludedClicks=$('.nights, .nights-expander, .book-wrap, .reply-expander')
+	$arrivalDate=$('.arrival-date')
 	$arrivalDateOutput=$arrivalDate.find('.arrival-date-output')
 	$pickmeup=$('.pickmeup')
-	$window.resize(function(){init.expanders(); init.screen(); init.nav(); $html.click()})
+	$temperature=$('.temperature')
+	$cf=$('.units .c, .units .f')
+	$window.resize(function(){
+		clearTimeout(resizeTimer)
+		resizeTimer = setTimeout(function(){
+			init.expanders()
+			init.screen()
+			init.nav()
+			$html.click()
+		}, 250)
+	})
 
 	$toggleButtonWrap.click(function(){
 		$toggleButton.toggleClass('open')
@@ -334,24 +358,45 @@ $(document).ready(function(){
 		})
 	})
 
+	$('.units').click(function(){
+		$temperature.find('.c-value, .f-value').toggleClass('open')
+		$cf.toggleClass('chosen')
+	})
+
 	$arrivalDate.pickmeup({
 		position: 'bottom',
 		hide_on_select: true,
 		prev: '',
 		next: '',
 		change: function(){
-			$arrivalDateOutput.html(arrivalDate.pickmeup('get_date', 'd/m/Y'))
+			var $arrivalDate, $arrivalDateOutput
+
+			$arrivalDate=$('.arrival-date')
+			$arrivalDateOutput=$arrivalDate.find('.arrival-date-output')
+			$arrivalDateOutput.html($arrivalDate.pickmeup('get_date', 'd/m/Y'))
 		},
 		fill: function(){
+			var $arrivalDate, $arrivalDateOutput
+
+			$arrivalDate=$('.arrival-date')
+			$arrivalDateOutput=$arrivalDate.find('.arrival-date-output')
 			$arrivalDateOutput.html($arrivalDate.pickmeup('get_date', 'd/m/Y'))
 		},
 		show: function(){
+			var $pickmeup, $arrivalDateArrow
+
+			$pickmeup=$('.pickmeup')
+			$arrivalDateArrow=$('.arrival-date .arrow-up')
 			$pickmeup.css({'display': 'block'})
 			$arrivalDateArrow.addClass('open')
 			navExpanders.nights.hide()
 			navExpanders.reply.hide()
 		},
 		hide: function(){
+			var $pickmeup, $arrivalDateArrow
+			// console.log(event)
+			$pickmeup=$('.pickmeup')
+			$arrivalDateArrow=$('.arrival-date .arrow-up')
 			$arrivalDateArrow.removeClass('open')
 			setTimeout(function(){
 				$pickmeup.css({'display': 'none'})

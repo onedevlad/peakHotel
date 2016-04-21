@@ -10,8 +10,8 @@ red=orange
 lightGray=rgb(162, 162,162)
 lightDark=rgb(100, 100, 100)
 transitionDuration=0.4s
-sprite(icon)
-	size=@height
+sprite(icon, size)
+	size?=@height
 	background url('../images/icons/icons.svg')
 	background-size size
 	background-repeat no-repeat

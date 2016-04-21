@@ -62,12 +62,25 @@
 				width 100%
 				height 100%
 				line-height navHeight
-				span.news-title
+				.news-icon-wrap
+					relative top 0.25em
+					display inline-block
+					width 1.5em
+					height 1.5em
+					.news-icon
+						width 100%
+						height 100%
+						sprite(6, 1.5em)
+				.news-title
 					margin-left 0.5em
 		.middle-bar
 			background gray
 			z-index 202
-			transition all transitionDuration ease
+			// transition all transitionDuration ease
+			& a
+			& a:link
+			& a:visited
+				color lightGray
 		.booking-bar
 			padding 0
 			line-height navHeight
@@ -89,6 +102,12 @@
 						transition opacity transitionDuration ease
 						&.open
 							opacity 1
+					.trending-down
+						display inline-block
+						height 0.75em
+						width 0.75em
+						margin-left 0.25em
+						sprite(0, 0.8em)
 				.arrival-date
 					cursor pointer
 					.arrival-date-output
@@ -97,12 +116,6 @@
 					cursor pointer
 					.nights-output
 						font-weight bold
-				.trending-down
-					display inline-block
-					height 0.75em
-					width 1em
-					background url('../images/icons/trending-down-gray.svg')
-					background-position bottom
 			.book-wrap
 				padding 0
 				.inner-wrap
@@ -146,6 +159,7 @@
 			width 100%
 			max-height 0
 			overflow hidden
+			transition max-height transitionDuration ease
 			&.open
 				max-height 500px
 			.links
@@ -171,8 +185,12 @@
 							background-size 100%
 							absolute right 0 bottom 0.25em
 					&:hover
-						color white
 						border-bottom 1px solid white
+						&
+						& a
+						& a:link
+						& a:visited
+							color white
 						.link-icon
 							background url('../images/icons/arrow-down-white.svg')
 							background-size 100%
@@ -192,6 +210,7 @@
 				text-align center
 				height navHeight
 			.book-wrap
+				margin-bottom 10px
 				width 40%
 				left 30%
 				.inner-wrap
@@ -220,6 +239,7 @@
 				height @height
 				width 76%
 				absolute left -67.7%
+				transition left transitionDuration ease
 				&.open
 					absolute left 8.3%
 				.links
