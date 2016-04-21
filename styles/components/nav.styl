@@ -90,7 +90,7 @@
 				font-style italic
 				.arrival-date
 				.nights
-					padding 0 5px
+					padding 0
 					height 100%
 					display inline-block
 					position relative
@@ -309,3 +309,9 @@
 @media(max-width $screen-lg)
 	.news-bar
 		display none !important
+@media(max-width $screen-lg) and (min-width $screen-md)
+	.middle-bar
+		left -79.7% !important
+		width 68% !important
+		&.open
+			left 8.3% !important

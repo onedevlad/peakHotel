@@ -13,9 +13,9 @@
 			z-index 0
 			width 100%
 		.slide-caption
-			absolute left 30% top 20%
+			//absolute left 30% top 20%
+			//width 50%
 			display block
-			width 50%
 			color white
 			text-align center
 			h1
@@ -136,6 +136,12 @@
 		width 100%
 
 @media(max-width $screen-lg)
+	.main-slider
+		.slide-caption
+			absolute left 10% top 0
+			width 80%
+			h1
+				padding-top 0
 	.slider-left
 	.slider-right
 		.slider
@@ -203,6 +209,10 @@
 		margin 5% auto 0 auto
 
 @media(min-width $screen-lg)
+	.main-slider
+		.slide-caption
+			absolute left 25% top 20%
+			width 50%
 	.slider-left
 		.slider
 			relative left 0

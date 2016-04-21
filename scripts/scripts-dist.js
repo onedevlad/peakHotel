@@ -6,6 +6,7 @@ sliders=[]
 navExpandedHeight=0
 middleBarHeight=0
 
+
 screens={
 	xs: 480,
 	sm: 750,
@@ -21,7 +22,8 @@ states={
 	navExpanders: {
 		servicesOpen: false,
 		nightsOpen: false,
-		replyOpen: false
+		replyOpen: false,
+		pickmeupHideAllowed: true
 	}
 }
 
@@ -51,10 +53,13 @@ navExpanders = {
 			$globalOverlay=$('.global-overlay')
 			$servicesExpander=$('.services-expander')
 			navExpanders.services.init()
+			// alert(navExpanders.services.hideTimeout)
 			clearInterval(navExpanders.services.hideTimeout)
 			$globalOverlay.addClass('open')
 			$servicesExpander.css({'left': navExpanders.services.coords.x+'px', 'top': navExpanders.services.coords.y+'px'})
 			$servicesExpander.addClass('open')
+			states.navExpanders.servicesOpen=true
+
 		},
 		hide: function(){
 			var $globalOverlay, $servicesExpander
@@ -66,13 +71,13 @@ navExpanders = {
 				$servicesExpander.removeClass('open')
 				navExpanders.services.hideTimeout=setTimeout(function(){
 					$servicesExpander.css({'left': '-100%'})
+					states.navExpanders.servicesOpen=false
 				}, transitionDuration)
 			}, transitionDuration)
 		},
 	},
 	nights: {
 		hideTimeout: null,
-		visible: false,
 		coords: {
 			x: 0,
 			y: 0
@@ -104,9 +109,9 @@ navExpanders = {
 			navExpanders.reply.hide()
 			clearInterval(navExpanders.nights.hideTimeout)
 			navExpanders.nights.init()
-			navExpanders.nights.visible=true
 			$nightsExpander.css({'left': navExpanders.nights.coords.x+'px', 'top': navExpanders.nights.coords.y+'px'})
 			$nightsExpander.addClass('open')
+			states.navExpanders.nightsOpen=true
 			$html.click(function(){navExpanders.nights.hide()})
 		},
 		hide: function(){
@@ -115,14 +120,14 @@ navExpanders = {
 			$html=$('html')
 			$nightsExpander=$('.nights-expander')
 			$html.unbind('click')
-			navExpanders.nights.visible=false
 			$nightsExpander.removeClass('open')
 			navExpanders.nights.hideTimeout=setTimeout(function(){
 				$nightsExpander.css({'left': '-100%'})
+				states.navExpanders.nightsOpen=false
 			}, transitionDuration)
 		},
 		toggle: function(){
-			if(navExpanders.nights.visible){
+			if(states.navExpanders.nigthsOpen){
 				navExpanders.nights.hide()
 			}
 			else{
@@ -166,16 +171,20 @@ navExpanders = {
 			$bookWrap=$('.book-wrap')
 			$innerWrap=$bookWrap.find('.inner-wrap')
 			$arrowRight=$bookWrap.find('.arrow-right')
+			
 			clearInterval(navExpanders.reply.hideTimeout)
-			navExpanders.reply.init()
 			navExpanders.nights.hide()
-			$replyExpander.addClass('open')
-			$replyExpander.css({'left': navExpanders.reply.coords.x+'px', 'top': navExpanders.reply.coords.y+'px'})
+			navExpanders.reply.init()
+
+			$replyExpander.addClass('open').css({'left': navExpanders.reply.coords.x+'px', 'top': navExpanders.reply.coords.y+'px'})
+
 			if(states.nav.middleBarOpen){
 				$innerWrap.addClass('open')
 				$arrowRight.addClass('open')
 			}
 			$html.click(function(){navExpanders.reply.hide()})
+			states.navExpanders.replyOpen=true
+
 		},
 		hide: function(){
 			var $html, $replyExpander, $innerWrap, $arrowRight
@@ -192,12 +201,13 @@ navExpanders = {
 
 			navExpanders.reply.hideTimeout=setTimeout(function(){
 				$replyExpander.css({'left': '-100%'})
+				states.navExpanders.replyOpen=false
 			}, transitionDuration)
 		}
 	}
 }
 
-function updateSlider(slider, next){//dirention = next?'forward':'backward'
+function updateSlider(slider, next){//direction = next?'forward':'backward'
 	// NOTE: The 'num' key of a 'sliders[slider]' object represents the length, not the last index
 	var slideTo
 
@@ -303,10 +313,11 @@ $(document).ready(function(){
 	$window.resize(function(){
 		clearTimeout(resizeTimer)
 		resizeTimer = setTimeout(function(){
+			$html.click()
+			$arrivalDate.pickmeup('hide')
 			init.expanders()
 			init.screen()
 			init.nav()
-			$html.click()
 		}, 250)
 	})
 
@@ -316,7 +327,6 @@ $(document).ready(function(){
 		states.nav.middleBarOpen=!states.nav.middleBarOpen
 		if(screens.current < screens.sm){
 			if(states.nav.middleBarOpen){
-			//if($middleBar.hasClass('open')){
 				$middleBar.css({'max-height': middleBarHeight+'px'})
 				$body.css({'padding-top': navExpandedHeight+'px'})
 			}
@@ -328,7 +338,7 @@ $(document).ready(function(){
 	})
 
 	$excludedClicks.click(function(e){var e = e || event; e.stopPropagation()})
-	$servicesExpander.hover(function(){clearInterval(expanderHideTimeout)}, function(){navExpanders.services.hide(true)})
+	$servicesExpander.hover(function(){clearInterval(navExpanders.services.hideTimeout)}, function(){navExpanders.services.hide(true)})
 
 	$nightsExpanderLi.click(navExpanders.nights.click)
 	$nights.click(navExpanders.nights.toggle)
@@ -391,16 +401,21 @@ $(document).ready(function(){
 			$arrivalDateArrow.addClass('open')
 			navExpanders.nights.hide()
 			navExpanders.reply.hide()
+			states.pickmeupHideAllowed=false
+			setTimeout(function(){
+				states.pickmeupHideAllowed=true
+			}, transitionDuration)
 		},
 		hide: function(){
 			var $pickmeup, $arrivalDateArrow
-			// console.log(event)
 			$pickmeup=$('.pickmeup')
 			$arrivalDateArrow=$('.arrival-date .arrow-up')
 			$arrivalDateArrow.removeClass('open')
-			setTimeout(function(){
-				$pickmeup.css({'display': 'none'})
-			}, transitionDuration)
+			if(states.pickmeupHideAllowed){
+				setTimeout(function(){
+					$pickmeup.css({'display': 'none'})
+				}, transitionDuration)
+			}
 		}
 	})
 })
