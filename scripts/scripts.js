@@ -280,15 +280,16 @@ init={
 }
 
 $(document).ready(function(){
-	var $window, $html, $toggleButtonWrap, $toggleButton, $middleBar, $body, $nights, $nightsExpander, $bookWrap, $replyExpander,
+	var $window, $html, $toggleButtonWrap, $toggleButton, $middleBar, $body, $htmlBody, $nights, $nightsExpander, $bookWrap, $replyExpander,
 		$servicesExpander, $nightsExpanderLi, $servicesLink, $footerUp, $mainFooter, $footer, $slider, $excludedClicks, $arrivalDate,
-		$arrivalDateOutput, $arrivalDateArrow, $pickmeup, $temperature, $cf, resizeTimer
+		$arrivalDateOutput, $arrivalDateArrow, $pickmeup, $temperature, $cf, $units, resizeTimer
 
 	init.all()
 
 	$window=$(window)
 	$html=$('html')
 	$body=$('body')
+	$htmlBody=$('html, body')
 	$toggleButtonWrap=$('.toggle-button-wrap')
 	$toggleButton=$('.toggle-button')
 	$middleBar=$('nav .middle-bar')
@@ -309,6 +310,7 @@ $(document).ready(function(){
 	$arrivalDateOutput=$arrivalDate.find('.arrival-date-output')
 	$pickmeup=$('.pickmeup')
 	$temperature=$('.temperature')
+	$units=$('.units')
 	$cf=$('.units .c, .units .f')
 	$window.resize(function(){
 		clearTimeout(resizeTimer)
@@ -348,7 +350,7 @@ $(document).ready(function(){
 
 	$footerUp.click(function(){
 		var mainPartHeight=$mainFooter.outerHeight()+75
-		$body.animate({scrollTop: $(document).height()+10000}, transitionDuration);//10000 is set to scroll the page to its end
+		$htmlBody.animate({scrollTop: $(document).height()+10000}, transitionDuration);//10000 is set to scroll the page to its end
 		if($footer.hasClass('open')){
 			$footer.removeAttr('style')
 		}
@@ -368,7 +370,7 @@ $(document).ready(function(){
 		})
 	})
 
-	$('.units').click(function(){
+	$units.click(function(){
 		$temperature.find('.c-value, .f-value').toggleClass('open')
 		$cf.toggleClass('chosen')
 	})

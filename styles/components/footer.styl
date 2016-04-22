@@ -1,8 +1,8 @@
 footer
 	margin-top 5%
 	width 100%
-	height 75px
-	padding-bottom 75px
+	height navHeight
+	padding-bottom navHeight
 	overflow hidden
 	background gray
 	color lightGray
@@ -42,9 +42,6 @@ footer
 							sprite(11, 2em)
 						&.trovit
 							sprite(10, 2em)
-			//	img
-			//		margin 0 auto
-			//		width 50%
 		.col-weather
 			.location
 				width 50%
@@ -59,8 +56,15 @@ footer
 				.inner-wrap
 					position relative
 					font-size 2em
-					img
-						height 100%
+					.icon-wrap
+						width 1em
+						height 1em
+						display inline-block
+						.icon.weather
+							width 100%
+							height 100%
+							sprite(13, 1em)
+							relative top 0.25em
 					.temperature
 						display inline-block
 						color white
@@ -111,7 +115,7 @@ footer
 		absolute bottom 0
 		margin-top 5%
 		background darkGray
-		height 75px
+		height navHeight
 		color lightGray
 		.col
 			height 100%
@@ -120,15 +124,18 @@ footer
 			&>span
 				width 100%
 				display inline-block
-				height 75px
-				line-height 75px
+				height 100%
+				line-height navHeight
 				text-align center
 		.col-slide
-			img
+			span
 				cursor pointer
-				height 45px
-				display block
-				margin 15px auto
+				width 3em
+				height 3em
+				display inline-block
+				absolute top 50% left 50%
+				margin -1.5em 0 0 -1.5em
+				sprite(9, 3em)
 		.col-devs
 			.logo-wrap
 				display inline-block

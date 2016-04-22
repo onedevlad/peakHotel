@@ -4,7 +4,8 @@
 	padding 0
 	margin 0
 	width 40%
-	height (navExpanderHeight/2.5)*2
+	height 15vw
+	//height (navExpanderHeight/2.5)*2
 	fixed top 0 left -100%
 	z-index 300
 	&.open
@@ -38,7 +39,10 @@
 				text-transform uppercase
 				line-height 3em
 				list-style-type none
-				span
+				a
+				a:link
+				a:visited
+					color gray
 					margin 0
 					cursor pointer
 					&:hover

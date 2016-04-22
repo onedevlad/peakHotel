@@ -25,7 +25,9 @@
 				.toggle-button
 					width 20px
 					height 20px
-					margin (navHeight/2 - 10px) 0 (navHeight/2 - 10px) 0
+					relative top 50%
+					margin-top -10px
+					//margin (navHeight/2 - 10px) 0 (navHeight/2 - 10px) 0
 					position relative
 					.line
 						transform-origin 50% 50%
@@ -135,7 +137,8 @@
 						text-transform uppercase
 					.arrow-right
 						arrow('right', white, 6px)
-						absolute top unit((navHeight/2) - 6, 'px')
+						absolute top 50%
+						margin-top -3px
 						opacity 1
 						transition opacity transitionDuration ease
 						&.open
@@ -226,17 +229,17 @@
 			height navHeight
 			.left-bar
 				display inline-block
-				height @height
+				height 100%
 				.logo-wrap
 					width 70%
-					height @height
+					height 100%
 					.logo
 						width 100%
 				.toggle-button-wrap
 					width 30%
 			.middle-bar
 				display inline-block
-				height @height
+				height 100%
 				width 76%
 				absolute left -67.7%
 				transition left transitionDuration ease
@@ -285,7 +288,9 @@
 								width 2px
 								height 2px
 								background white
-								absolute top unit(sum(navHeight/2, -2), 'px') right 1px
+								absolute top 50% right 1px
+								margin-top -1px
+								//absolute top unit(sum(navHeight/2, -2), 'px') right 1px
 						&:last-child .link-text-wrap::after
 						&:last-child .link-text-wrap:after
 							display none
@@ -293,7 +298,7 @@
 				height 100%
 				.selects-wrap
 				.book-wrap
-					height navHeight
+					height 100%
 				.selects-wrap
 					font-family 'Playfair Display'
 					font-style italic
