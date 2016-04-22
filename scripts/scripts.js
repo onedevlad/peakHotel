@@ -42,7 +42,7 @@ navExpanders = {
 			$servicesExpander=$('.services-expander')
 			navWidth = $nav.width()
 			servicesLinkCenter = $servicesLink.offset().left + $servicesLink.outerWidth()/2
-			servicesExpanderTop = $servicesLink.get(0).getBoundingClientRect().top + $servicesLink.outerHeight() - 12
+			servicesExpanderTop = $servicesLink.get(0).getBoundingClientRect().top + $servicesLink.outerHeight()
 			servicesExpanderLeft = servicesLinkCenter - $servicesExpander.outerWidth()/2
 			navExpanders.services.coords.x = servicesExpanderLeft
 			navExpanders.services.coords.y = servicesExpanderTop
@@ -53,7 +53,6 @@ navExpanders = {
 			$globalOverlay=$('.global-overlay')
 			$servicesExpander=$('.services-expander')
 			navExpanders.services.init()
-			// alert(navExpanders.services.hideTimeout)
 			clearInterval(navExpanders.services.hideTimeout)
 			$globalOverlay.addClass('open')
 			$servicesExpander.css({'left': navExpanders.services.coords.x+'px', 'top': navExpanders.services.coords.y+'px'})
@@ -83,12 +82,13 @@ navExpanders = {
 			y: 0
 		},
 		init: function(){
-			var $nightsExpander, $nights
+			var $nightsExpander, $nights, $nightsSpan
 
 			$nightsExpander=$('.nights-expander')
 			$nights=$('.nights')
-			$nightsExpander.css({width: ($nights.width())+'px'})
-			navExpanders.nights.coords.x=$nights.offset().left
+			$nightsSpan=$('.nights > span')
+			//$nightsExpander.css({width: ($nights.width())+'px'})
+			navExpanders.nights.coords.x=$nightsSpan.offset().left + $nightsSpan.outerWidth()/2 - $('.nights-expander').outerWidth()/2
 			navExpanders.nights.coords.y=$nights.get(0).getBoundingClientRect().top+$nights.outerHeight() - 12
 		},
 		click: function(){
@@ -340,7 +340,7 @@ $(document).ready(function(){
 	})
 
 	$excludedClicks.click(function(e){var e = e || event; e.stopPropagation()})
-	$servicesExpander.hover(function(){clearInterval(navExpanders.services.hideTimeout)}, function(){navExpanders.services.hide(true)})
+	$servicesExpander.hover(function(){clearInterval(navExpanders.services.hideTimeout)}, function(){navExpanders.services.hide()})
 
 	$nightsExpanderLi.click(navExpanders.nights.click)
 	$nights.click(navExpanders.nights.toggle)
@@ -349,15 +349,7 @@ $(document).ready(function(){
 	$servicesLink.hover(navExpanders.services.show, navExpanders.services.hide)
 
 	$footerUp.click(function(){
-		var mainPartHeight=$mainFooter.outerHeight()+75
-		$htmlBody.animate({scrollTop: $(document).height()+10000}, transitionDuration);//10000 is set to scroll the page to its end
-		if($footer.hasClass('open')){
-			$footer.removeAttr('style')
-		}
-		else{
-			$footer.css({'height': mainPartHeight+'px'})
-		}
-		$footer.toggleClass('open')
+		$htmlBody.animate({scrollTop: 0}, transitionDuration);
 	})
 
 
@@ -373,6 +365,12 @@ $(document).ready(function(){
 	$units.click(function(){
 		$temperature.find('.c-value, .f-value').toggleClass('open')
 		$cf.toggleClass('chosen')
+	})
+
+	$('.list-link').click(function(){
+		var index=this.id.slice(-1)
+		$('.services-img .open').removeClass('open')
+		$('#services-img-'+index).addClass('open')
 	})
 
 	$arrivalDate.pickmeup({

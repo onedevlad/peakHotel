@@ -1,57 +1,64 @@
 .services-expander
-	opacity 0
 	transition opacity transitionDuration ease
+	opacity 0
 	padding 0
 	margin 0
 	width 40%
-	height 15vw
-	//height (navExpanderHeight/2.5)*2
-	fixed top 0 left -100%
+	top 0
+	left -100%
 	z-index 300
 	&.open
 		opacity 1
-	.expander-arrow
-		relative top 0
-		left calc(50% - 6px)
-		arrow('up', white, 6px)
-	.expander-inner
+	.arrow-up-wrap
+		height 6px
+		.arrow-up
+			arrow('up', white, 6px)
+			absolute left 50%
+			margin -6px 0 0 -3px
+	.inner-wrap
 		background white
-		width 100%
-		height calc(100% - 12px)
 		.services-img
 		.services-list
 			padding 0
 		.services-img
 			height 100%
-			img
-				width 90%
-				absolute top 0 left 0 right 0 bottom 0
-				margin auto
-	.services-list
-		height 100%
-		.list-wrap
-			display block
-			width 100%
+			.img-wrap
+				width 100%
+				padding-top 75%
+				img
+					absolute top 0
+					margin 1em
+					max-width calc(100% - 2em)
+					max-height calc(100% - 2em)
+					transition opacity transitionDuration ease
+					opacity 0
+					&.open
+						opacity 1
+		.services-list
 			height 100%
-			.list
-				display inline-block
-				padding 7.5% 0 0 15%
-				text-transform uppercase
-				line-height 3em
-				list-style-type none
-				a
-				a:link
-				a:visited
-					color gray
-					margin 0
-					cursor pointer
-					&:hover
-						border-bottom 1px solid gray
+			.list-wrap
+				display block
+				width 100%
+				height 100%
+				.list
+					display inline-block
+					padding 7.5% 0 0 15%
+					text-transform uppercase
+					line-height 3em
+					list-style-type none
+					a
+					a:link
+					a:visited
+						color gray
+						margin 0
+						cursor pointer
+						&:hover
+							border-bottom 1px solid gray
 
 .nights-expander
 	padding 0
-	width 20%
-	fixed top 0 left -100%
+	top 0
+	left -100%
 	text-align center
 	transition opacity transitionDuration ease
 	opacity 0
@@ -65,7 +72,7 @@
 	.expander-inner
 		ul
 			background gray
-			padding 0
+			padding 0 2em
 			margin 0
 			list-style-type none
 			li
@@ -93,7 +100,8 @@
 .reply-expander
 	padding 0
 	width 20%
-	fixed top 0 left -100%
+	top 0
+	left -100%
 	text-align center
 	transition opacity transitionDuration ease
 	opacity 0
@@ -170,3 +178,13 @@
 					.button-inner
 						left 0
 						width 100%
+@media(min-width $screen-md)
+	.services-expander
+	.nights-expander
+	.reply-expander
+		position fixed
+@media(max-width $screen-md)
+	.services-expander
+	.nights-expander
+	.reply-expander
+		position absolute

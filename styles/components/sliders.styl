@@ -55,7 +55,7 @@
 					background rgba(orange, 0.75)
 					width 50px
 					height 50px
-					transition all 0.1s linear
+					transition all 0.1s ease
 					cursor pointer
 		.caption-inner
 			background gray
@@ -72,19 +72,19 @@
 					background white
 			.slider-nav
 				width 10%
-				height 25%
-				absolute top 37.5%
+				height 15%
+				absolute top 42.5%
+				overflow hidden
 				span
-					font-size 2em
+					font-size 1.5em
 					font-family 'Playfair Display'
 					font-weight bold
 					display inline-block
 				.current-slide
 					text-align left
 					color white
-					absolute top 0 left 10%
-					height 40%
-					width 80%
+					absolute top -0.25em left 10%
+					width 90%
 				.line
 					width 100%
 					absolute top 50%
@@ -92,10 +92,9 @@
 					background white
 					transform-style flat
 					transform-origin center center
-					transform rotate(-30deg)
+					transform rotate(-45deg)
 				.slides-num
-					width 80%
-					height 40%
+					width 90%
 					color lightGray
 					absolute bottom 0 right 10%
 					text-align right

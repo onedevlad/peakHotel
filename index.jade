@@ -12,20 +12,25 @@ html
 	body
 		.global-overlay
 		.services-expander
-			.expander-arrow
-			.expander-inner
+			.arrow-up-wrap.row
+				.arrow-up
+			.inner-wrap.row
 				.services-img.col-md-7.hidden-sm.hidden-xs
-					img(src='./images/services.jpg', alt='Services')
+					.img-wrap
+						img#services-img-0.open(src='./images/services/0.jpg', alt='Services')
+						img#services-img-1(src='./images/services/1.jpg', alt='Services')
+						img#services-img-2(src='./images/services/2.jpg', alt='Services')
+						img#services-img-3(src='./images/services/3.jpg', alt='Services')
 				.services-list.col-md-5.col-xs-12.col-sm-12
 					.list-wrap
 						.list
-							a Rent
+							a.list-link#list-link-0 Rent
 							br
-							a Sauna bath
+							a.list-link#list-link-1 Sauna bath
 							br
-							a Bowling
+							a.list-link#list-link-2 Bowling
 							br
-							a Billiard
+							a.list-link#list-link-3 Billiard
 		.nights-expander
 			.expander-arrow
 			.expander-inner
@@ -63,7 +68,7 @@ html
 		.container-fluid
 			nav.row
 				.container-fluid
-					.left-bar.col-lg-1.col-md-1
+					.left-bar
 						.logo-wrap
 							img.logo(src='./images/icons/logo.svg', alt='Logo')
 						.toggle-button-wrap
@@ -71,7 +76,7 @@ html
 								.line.line-1
 								.line.line-2
 								.line.line-3
-					.news-bar.col-lg-1.col-md-1
+					.news-bar
 						.news-wrap
 							span.news-icon-wrap
 								.news-icon
@@ -325,7 +330,7 @@ html
 					.col.col-slide.col-xs-2.col-sm-4
 						span#footer-up(src='./images/icons/trending-up-orange.svg')
 					.col.col-devs.col-xs-5.col-sm-4
-						span
+						a
 							span Made with passion by
 							span.logo-wrap
 								.logo.dev-logo

@@ -1,6 +1,5 @@
 .container-fluid>nav
 	background white
-	position fixed
 	top 0
 	width 100%
 	z-index 200
@@ -27,8 +26,6 @@
 					height 20px
 					relative top 50%
 					margin-top -10px
-					//margin (navHeight/2 - 10px) 0 (navHeight/2 - 10px) 0
-					position relative
 					.line
 						transform-origin 50% 50%
 						transition all transitionDuration ease
@@ -60,6 +57,7 @@
 			padding 0 0 0 15px
 			height 100%
 			display inline-block
+			absolute top 0 left navHeight + 40px
 			.news-wrap
 				width 100%
 				height 100%
@@ -145,12 +143,13 @@
 							opacity 0
 
 @media(max-width $screen-md)
-	body
-		padding-top navHeight*3 // Height of .left-bar = height of .selects-wrap = height of .book-wrap = navHeight
 	nav
+		position relative
 		.left-bar
+			absolute left 0 top 0
 			width 100%
 			height navHeight
+			position relative
 			.logo-wrap
 				width 50%
 				height 100%
@@ -158,6 +157,8 @@
 					float right
 			.toggle-button-wrap
 				width 50%
+				.toggle-button
+					margin -10px 0 0 10px
 		.middle-bar
 			width 100%
 			max-height 0
@@ -213,7 +214,6 @@
 				text-align center
 				height navHeight
 			.book-wrap
-				margin-bottom 10px
 				width 40%
 				left 30%
 				.inner-wrap
@@ -225,18 +225,23 @@
 	body
 		padding-top navHeight
 	nav
+		position fixed
 		.container-fluid
 			height navHeight
 			.left-bar
+				width navHeight + 40px
 				display inline-block
 				height 100%
 				.logo-wrap
-					width 70%
+					absolute top 0 left 0
+					width navHeight
 					height 100%
 					.logo
 						width 100%
 				.toggle-button-wrap
-					width 30%
+					width 40px
+					height 100%
+					absolute right 0 top 0
 			.middle-bar
 				display inline-block
 				height 100%
@@ -290,7 +295,6 @@
 								background white
 								absolute top 50% right 1px
 								margin-top -1px
-								//absolute top unit(sum(navHeight/2, -2), 'px') right 1px
 						&:last-child .link-text-wrap::after
 						&:last-child .link-text-wrap:after
 							display none
