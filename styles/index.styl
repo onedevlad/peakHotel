@@ -38,19 +38,32 @@ a:hover
 a:focus
 	text-decoration none
 
-@media(max-width $screen-xs)
+@media(min-width 0) and (max-width $screen-xxs)
 	body
 		font-size 10px !important
 
-@media(min-width 1700px) and (max-width 2000px)
-	body
-		font-size 18px !important
-
-@media(min-width 2000px) and (max-width 2500px)
+@media(min-width $screen-xl) and (max-width $screen-xxl)
 	body
 		font-size 20px !important
+		padding-top 150px !important
+		nav
+			.container-fluid
+				height 150px !important
+				.news-bar
+					.news-wrap
+						line-height 150px !important
+				.booking-bar
+					line-height 150px !important
+		footer
+			.subfooter
+				height 150px !important
+				.col-rights
+				.col-devs
+					&>span
+					&>a
+						line-height 150px !important
 
-@media(min-width 2500px)
+@media(min-width $screen-xxl)
 	body
 		font-size 25px !important
 		padding-top 200px !important
@@ -63,11 +76,10 @@ a:focus
 				.booking-bar
 					line-height 200px !important
 		footer
-			padding-bottom 200px !important
-			height 200px !important
 			.subfooter
 				height 200px !important
 				.col-rights
 				.col-devs
 					&>span
+					&>a
 						line-height 200px !important

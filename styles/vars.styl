@@ -7,10 +7,17 @@ orange=rgb(198, 111, 33)
 gray=rgb(59, 55, 54)
 darkGray=rgb(48, 44, 43)
 lighterGray=rgb(69, 55, 54)
-red=orange
 lightGray=rgb(162, 162,162)
 lightDark=rgb(100, 100, 100)
 transitionDuration=0.4s
+red=orange
+
+$screen-xxs=360px
+$screen-xl=1700px
+$screen-xxl=2000px
+$screen-xxxl=2500px // ~2K
+
+
 sprite(icon, size)
 	size?=@height
 	background url('../images/icons/icons.svg')
@@ -21,15 +28,23 @@ sprite(icon, size)
 arrow(dir='up', color=gray, size=6px)
 	width 0
 	height 0
-	border-top size solid transparent
-	border-left size solid transparent
-	border-right size solid transparent
-	border-bottom size solid transparent
 	if dir is 'up'
+		border-top size solid transparent
+		border-left size solid transparent
+		border-right size solid transparent
 		border-bottom size solid color
 	if dir is 'left'
+		border-top size solid transparent
+		border-left size solid transparent
 		border-right size solid color
+		border-bottom size solid transparent
 	if dir is 'right'
+		border-top size solid transparent
 		border-left size solid color
+		border-right size solid transparent
+		border-bottom size solid transparent
 	if dir is 'down'
 		border-top size solid color
+		border-left size solid transparent
+		border-right size solid transparent
+		border-bottom size solid transparent

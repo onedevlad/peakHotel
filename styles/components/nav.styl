@@ -161,7 +161,7 @@
 					margin -10px 0 0 10px
 		.middle-bar
 			width 100%
-			max-height 0
+			max-height 0 // CSS doesn't support transitions with keywords (such as `0 => auto` in this case). That's why `max-height` property is animated
 			overflow hidden
 			transition max-height transitionDuration ease
 			&.open
@@ -224,97 +224,99 @@
 @media(min-width $screen-md)
 	body
 		padding-top navHeight
-	nav
-		position fixed
-		.container-fluid
-			height navHeight
-			.left-bar
-				width navHeight + 40px
-				display inline-block
-				height 100%
-				.logo-wrap
-					absolute top 0 left 0
-					width navHeight
+	.container-fluid
+		&>nav
+			position fixed
+			.container-fluid
+				height navHeight
+				.left-bar
+					width navHeight + 40px
+					display inline-block
 					height 100%
-					.logo
-						width 100%
-				.toggle-button-wrap
-					width 40px
-					height 100%
-					absolute right 0 top 0
-			.middle-bar
-				display inline-block
-				height 100%
-				width 76%
-				absolute left -67.7%
-				transition left transitionDuration ease
-				&.open
-					absolute left 8.3%
-				.links
-					padding 0
-					margin 0 0 0 2%
-					height 100%
-					.link
-						display inline-block
+					.logo-wrap
+						absolute top 0 left 0
+						width navHeight
 						height 100%
-						position relative
-						overflow visible
-						.link-text-wrap
-							padding 0 20px
-							display inline-block
-							text-transform uppercase
-							text-align center
+						.logo
 							width 100%
-							height 100%
-							cursor pointer
-							position relative
-							cursor pointer
-							.arrow-up
-								arrow('up', white, 6px)
-								opacity 0
-								transition opacity transitionDuration ease
-								absolute bottom
-								left calc(50% - 3px)
-								&.open
-									opacity 1
-							.link-text
-								display inline-block
-								position relative
-								top calc(50% - 0.75em)
-								color lightGray
-								img
-									display none
-							&:hover .link-text
-								color white
-								border-bottom 1px solid white
-							&::after
-								content ''
-								display inline-block
-								width 2px
-								height 2px
-								background white
-								absolute top 50% right 1px
-								margin-top -1px
-						&:last-child .link-text-wrap::after
-						&:last-child .link-text-wrap:after
-							display none
-			.booking-bar
-				height 100%
-				.selects-wrap
-				.book-wrap
+					.toggle-button-wrap
+						width 40px
+						height 100%
+						absolute right 0 top 0
+				.middle-bar
+					display inline-block
 					height 100%
-				.selects-wrap
-					font-family 'Playfair Display'
-					font-style italic
-				.book-wrap
-					.inner-wrap
-						width 90%
-						span
+					width 76%
+					position absolute
+					left 'calc(-76% + %s + 40px)' % navHeight
+					transition left transitionDuration ease
+					&.open
+						absolute left 8.3%
+					.links
+						padding 0
+						margin 0 0 0 2%
+						height 100%
+						.link
 							display inline-block
-							width 100%
-							color white
-							text-align center
-							text-transform uppercase
+							height 100%
+							position relative
+							overflow visible
+							.link-text-wrap
+								padding 0 20px
+								display inline-block
+								text-transform uppercase
+								text-align center
+								width 100%
+								height 100%
+								cursor pointer
+								position relative
+								cursor pointer
+								.arrow-up
+									arrow('up', white, 6px)
+									opacity 0
+									transition opacity transitionDuration ease
+									absolute bottom
+									left calc(50% - 3px)
+									&.open
+										opacity 1
+								.link-text
+									display inline-block
+									position relative
+									top calc(50% - 0.75em)
+									color lightGray
+									img
+										display none
+								&:hover .link-text
+									color white
+									border-bottom 1px solid white
+								&::after
+									content ''
+									display inline-block
+									width 2px
+									height 2px
+									background white
+									absolute top 50% right 1px
+									margin-top -1px
+							&:last-child .link-text-wrap::after
+							&:last-child .link-text-wrap:after
+								display none
+				.booking-bar
+					height 100%
+					.selects-wrap
+					.book-wrap
+						height 100%
+					.selects-wrap
+						font-family 'Playfair Display'
+						font-style italic
+					.book-wrap
+						.inner-wrap
+							width 90%
+							span
+								display inline-block
+								width 100%
+								color white
+								text-align center
+								text-transform uppercase
 @media(max-width $screen-lg)
 	.news-bar
 		display none !important

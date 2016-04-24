@@ -87,7 +87,6 @@ navExpanders = {
 			$nightsExpander=$('.nights-expander')
 			$nights=$('.nights')
 			$nightsSpan=$('.nights > span')
-			//$nightsExpander.css({width: ($nights.width())+'px'})
 			navExpanders.nights.coords.x=$nightsSpan.offset().left + $nightsSpan.outerWidth()/2 - $('.nights-expander').outerWidth()/2
 			navExpanders.nights.coords.y=$nights.get(0).getBoundingClientRect().top+$nights.outerHeight() - 12
 		},
@@ -330,7 +329,6 @@ $(document).ready(function(){
 		if(screens.current < screens.sm){
 			if(states.nav.middleBarOpen){
 				$middleBar.css({'max-height': middleBarHeight+'px'})
-				$body.css({'padding-top': navExpandedHeight+'px'})
 			}
 			else{
 				$middleBar.removeAttr('style')
