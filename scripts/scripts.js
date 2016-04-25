@@ -37,7 +37,7 @@ navExpanders = {
 		},
 		init: function(){
 			var navWidth, servicesLinkCenter, servicesExpanderTop, servicesExpanderLeft, $nav, $servicesLink, $servicesExpander
-		
+
 			$nav=$('nav')
 			$servicesLink=$('.services-link')
 			$servicesExpander=$('.services-expander')
@@ -188,17 +188,16 @@ navExpanders = {
 			$bookWrap=$('.book-wrap')
 			$innerWrap=$bookWrap.find('.inner-wrap')
 			$arrowRight=$bookWrap.find('.arrow-right')
-			
+
 			clearInterval(navExpanders.reply.hideTimeout)
 			navExpanders.nights.hide()
 			navExpanders.reply.init()
 
 			$replyExpander.addClass('open').css({'left': navExpanders.reply.coords.x+'px', 'top': navExpanders.reply.coords.y+'px'})
 
-			if(states.nav.middleBarOpen){
-				$innerWrap.addClass('open')
-				$arrowRight.addClass('open')
-			}
+			$innerWrap.addClass('open')
+			$arrowRight.addClass('open')
+
 			$html.click(function(){navExpanders.reply.hide()})
 			states.navExpanders.replyOpen=true
 
@@ -241,8 +240,8 @@ function updateSlider(slider, next){//direction = next?'forward':'backward'
 	}
 	sliders[slider].current=slideTo
 	$('#slider'+slider).find('.current-slide').html(slideTo+1)
-	left=-(slideTo*100)
-	$('#slider'+slider).find('.slides').css({'left': left+'%'})
+	$('#slider'+slider).find('.slides .slide.open').removeClass('open')
+	$('#slider'+slider).find('.slides .slide').eq(slideTo).addClass('open')
 }
 
 init={
@@ -270,15 +269,12 @@ init={
 		}, 100)
 	},
 	sliders: function(){
-		var left, slidersLength, i, j
-		left=100
+		var slidersLength
 		slidersLength=$('.slider').length
 		for(i=0; i<slidersLength; i++){
 			sliders[i]={num: $('#slider'+i).find('.slide').length, current: 0}
-			for(j=0; j<=sliders[i].num; j++){
-				$('#slider'+i).find('.slide').eq(j).css({'left': (left*j)+'%'})
-				$('#slider'+i).find('.slides-num').html(sliders[i].num)
-			}
+			$('#slider'+i).find('.slides-num').html(sliders[i].num)
+			$('#slider'+i).find('.slide').eq(0).addClass('open')
 		}
 	},
 	expanders: function(){
@@ -306,7 +302,7 @@ $(document).ready(function(){
 			init.expanders()
 			init.nav()
 			$('.arrival-date').pickmeup('hide')
-			$html.click()
+			$('html').click()
 		}, 250)
 	})
 
@@ -335,9 +331,6 @@ $(document).ready(function(){
 	$('.nights-expander li').click(navExpanders.nights.click)
 	$('.nights').click(navExpanders.nights.toggle)
 	$('.book-wrap').click(navExpanders.reply.show)
-
-	//$('.services-expander').hover(function(){clearTimeout(navExpanders.services.hideTimeout)}, function(){navExpanders.services.hide()})
-	//$('.services-link').hover(navExpanders.services.show, navExpanders.services.hide)
 
 	$('#footer-up').click(function(){
 		$('html, body').animate({scrollTop: 0}, transitionDuration)

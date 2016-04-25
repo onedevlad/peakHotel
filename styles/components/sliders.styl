@@ -1,8 +1,10 @@
 .main-slider
 	margin 0
 	width 100%
+	height 'calc(100vh - %s)' % navHeight
 	.slide
 		width 100%
+		height 100%
 		position relative
 		.overlay
 			position absolute
@@ -11,7 +13,12 @@
 			background rgba(black, 0.75)
 		.bg
 			z-index 0
+			height 100%
 			width 100%
+			background url('../images/bg.png')
+			background-repeat no-repeat
+			background-size cover
+			background-position center
 		.slide-caption
 			//absolute left 30% top 20%
 			//width 50%
@@ -28,24 +35,24 @@
 	position relative
 	width 100%
 	.slider
-		height 38vw
+		height navHeight*5
 		overflow hidden
 		position relative
 		.slides
 			width 100%
 			height 100%
-			absolute left 0
-			transition left transitionDuration ease
+			position relative
 			.slide
 				width 100%
 				height 100%
-				overflow hidden
-				absolute top 0
+				absolute left 0 top 0
+				opacity 0
+				transition opacity transitionDuration ease
+				&.open
+					opacity 1
 				img
-					//max-width 100%
-					//max-height 100%
-					width 120%
-					absolute left 0 top 0
+					height 100%
+					max-height 100%
 	.caption
 		position relative
 		.slider-controls-wrapper
@@ -137,7 +144,7 @@
 @media(max-width $screen-lg)
 	.main-slider
 		.slide-caption
-			absolute left 10% top 0
+			absolute left 10% top 30%
 			width 80%
 			h1
 				padding-top 0
@@ -157,7 +164,7 @@
 		.caption
 			width 70%
 			min-height 30vw
-			margin -15% auto 0 auto
+			margin -30% auto 0 auto
 			.slider-controls-wrapper
 				position relative
 				top 0
