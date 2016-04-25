@@ -71,16 +71,12 @@ $today-color = $color-hover
       .pmu-prev,
       .pmu-next
         display none
-        height 1em
+        height 2em
         width 2em
       .pmu-prev
-        background url('../../images/icons/trending-left-orange.svg')
-        background-repeat no-repeat
-        background-size 100%
+        sprite(7, 2em)
       .pmu-next
-        background url('../../images/icons/trending-right-orange.svg')
-        background-repeat no-repeat
-        background-size 100%
+        sprite(8, 2em)
       .pmu-month
         color $month-color
         width 14em
@@ -109,7 +105,7 @@ $today-color = $color-hover
     .pmu-month
       width 13em
   .pmu-instance:first-child:last-child .pmu-month
-    width 12em
+    width 10em
   &:not(.pmu-view-days) .pmu-days,
   &:not(.pmu-view-days) .pmu-day-of-week,
   &:not(.pmu-view-months) .pmu-months,

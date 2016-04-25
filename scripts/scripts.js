@@ -5,6 +5,7 @@ expanderHideTimeout
 sliders=[]
 navExpandedHeight=0
 middleBarHeight=0
+var resizeTimer=0
 
 
 screens={
@@ -36,10 +37,26 @@ navExpanders = {
 		},
 		init: function(){
 			var navWidth, servicesLinkCenter, servicesExpanderTop, servicesExpanderLeft, $nav, $servicesLink, $servicesExpander
-
+		
 			$nav=$('nav')
 			$servicesLink=$('.services-link')
 			$servicesExpander=$('.services-expander')
+			$('.services-link, .services-expander').unbind('click mouseover mouseout mouseenter mouseleave')
+			if(screens.current <= screens.md){
+				$('.services-link').click(function(e){
+					var e = e || window.event
+					e.stopPropagation()
+					navExpanders.services.show()
+					$('html').click(function(){
+						navExpanders.services.hide()
+					})
+				})
+			}
+			else{
+				$('.services-expander').hover(function(){clearTimeout(navExpanders.services.hideTimeout); navExpanders.services.show()}, function(){navExpanders.services.hide()})
+				$('.services-link').hover(navExpanders.services.show, navExpanders.services.hide)
+			}
+
 			navWidth = $nav.width()
 			servicesLinkCenter = $servicesLink.offset().left + $servicesLink.outerWidth()/2
 			servicesExpanderTop = $servicesLink.get(0).getBoundingClientRect().top + $servicesLink.outerHeight()
@@ -53,7 +70,7 @@ navExpanders = {
 			$globalOverlay=$('.global-overlay')
 			$servicesExpander=$('.services-expander')
 			navExpanders.services.init()
-			clearInterval(navExpanders.services.hideTimeout)
+			clearTimeout(navExpanders.services.hideTimeout)
 			$globalOverlay.addClass('open')
 			$servicesExpander.css({'left': navExpanders.services.coords.x+'px', 'top': navExpanders.services.coords.y+'px'})
 			$servicesExpander.addClass('open')
@@ -63,6 +80,7 @@ navExpanders = {
 		hide: function(){
 			var $globalOverlay, $servicesExpander
 
+			$('html').unbind('click')
 			$globalOverlay=$('.global-overlay')
 			$servicesExpander=$('.services-expander')
 			navExpanders.services.hideTimeout=setTimeout(function(){
@@ -72,7 +90,7 @@ navExpanders = {
 					$servicesExpander.css({'left': '-100%'})
 					states.navExpanders.servicesOpen=false
 				}, transitionDuration)
-			}, transitionDuration)
+			}, (screens.current >= screens.md)?transitionDuration:0)
 		},
 	},
 	nights: {
@@ -228,6 +246,9 @@ function updateSlider(slider, next){//direction = next?'forward':'backward'
 }
 
 init={
+	screen: function(){
+		screens.current=$(window).outerWidth()
+	},
 	nav: function(){
 		var $nav, $middleBar
 
@@ -265,9 +286,6 @@ init={
 		navExpanders.nights.init()
 		navExpanders.reply.init()
 	},
-	screen: function(){
-		screens.current=$(window).outerWidth()
-	},
 	all: function(){
 		for(var key in init){
 			if(key === 'all'){
@@ -279,50 +297,25 @@ init={
 }
 
 $(document).ready(function(){
-	var $window, $html, $toggleButtonWrap, $toggleButton, $middleBar, $body, $htmlBody, $nights, $nightsExpander, $bookWrap, $replyExpander,
-		$servicesExpander, $nightsExpanderLi, $servicesLink, $footerUp, $mainFooter, $footer, $slider, $excludedClicks, $arrivalDate,
-		$arrivalDateOutput, $arrivalDateArrow, $pickmeup, $temperature, $cf, $units, resizeTimer
-
 	init.all()
 
-	$window=$(window)
-	$html=$('html')
-	$body=$('body')
-	$htmlBody=$('html, body')
-	$toggleButtonWrap=$('.toggle-button-wrap')
-	$toggleButton=$('.toggle-button')
-	$middleBar=$('nav .middle-bar')
-	$nights=$('.nights')
-	$nightsExpander=$('.nights-expander')
-	$bookWrap=$('.book-wrap')
-	$replyExpander=$('.reply-expander')
-	$servicesExpander=$('.services-expander')
-	$nightsExpanderLi=$('.nights-expander li')
-	$servicesLink=$('.services-link')
-	$footerUp=$('#footer-up')
-	$footer=$('footer')
-	$mainFooter=$('.main-footer')
-	$slider=$('.slider'),
-	$arrivalDateArrow=$('.arrival-date .arrow-up')
-	$excludedClicks=$('.nights, .nights-expander, .book-wrap, .reply-expander')
-	$arrivalDate=$('.arrival-date')
-	$arrivalDateOutput=$arrivalDate.find('.arrival-date-output')
-	$pickmeup=$('.pickmeup')
-	$temperature=$('.temperature')
-	$units=$('.units')
-	$cf=$('.units .c, .units .f')
-	$window.resize(function(){
+	$(window).resize(function(){
 		clearTimeout(resizeTimer)
 		resizeTimer = setTimeout(function(){
-			$html.click()
-			$arrivalDate.pickmeup('hide')
-			init.expanders()
 			init.screen()
+			init.expanders()
 			init.nav()
+			$('.arrival-date').pickmeup('hide')
+			$html.click()
 		}, 250)
 	})
 
-	$toggleButtonWrap.click(function(){
+	$('.toggle-button-wrap').click(function(){
+		var $toggleButton, $middleBar
+
+		$toggleButton=$('.toggle-button')
+		$middleBar=$('nav .middle-bar')
+
 		$toggleButton.toggleClass('open')
 		$middleBar.toggleClass('open')
 		states.nav.middleBarOpen=!states.nav.middleBarOpen
@@ -332,26 +325,26 @@ $(document).ready(function(){
 			}
 			else{
 				$middleBar.removeAttr('style')
-				$body.removeAttr('style')
+				$('body').removeAttr('style')
 			}
 		}
 	})
 
-	$excludedClicks.click(function(e){var e = e || event; e.stopPropagation()})
-	$servicesExpander.hover(function(){clearInterval(navExpanders.services.hideTimeout)}, function(){navExpanders.services.hide()})
+	$('.nights, .nights-expander, .book-wrap, .reply-expander').click(function(e){var e = e || event; e.stopPropagation()})
 
-	$nightsExpanderLi.click(navExpanders.nights.click)
-	$nights.click(navExpanders.nights.toggle)
-	$bookWrap.click(navExpanders.reply.show)
+	$('.nights-expander li').click(navExpanders.nights.click)
+	$('.nights').click(navExpanders.nights.toggle)
+	$('.book-wrap').click(navExpanders.reply.show)
 
-	$servicesLink.hover(navExpanders.services.show, navExpanders.services.hide)
+	//$('.services-expander').hover(function(){clearTimeout(navExpanders.services.hideTimeout)}, function(){navExpanders.services.hide()})
+	//$('.services-link').hover(navExpanders.services.show, navExpanders.services.hide)
 
-	$footerUp.click(function(){
-		$htmlBody.animate({scrollTop: 0}, transitionDuration);
+	$('#footer-up').click(function(){
+		$('html, body').animate({scrollTop: 0}, transitionDuration)
 	})
 
 
-	$slider.each(function(i, el){
+	$('.slider').each(function(i, el){
 		$('#slider'+i+'-prev').click(function(){
 			updateSlider(i, false)
 		})
@@ -360,9 +353,9 @@ $(document).ready(function(){
 		})
 	})
 
-	$units.click(function(){
-		$temperature.find('.c-value, .f-value').toggleClass('open')
-		$cf.toggleClass('chosen')
+	$('.units').click(function(){
+		$('.temperature').find('.c-value, .f-value').toggleClass('open')
+		$('.units .c, .units .f').toggleClass('chosen')
 	})
 
 	$('.list-link').click(function(){
@@ -371,7 +364,12 @@ $(document).ready(function(){
 		$('#services-img-'+index).addClass('open')
 	})
 
-	$arrivalDate.pickmeup({
+	$('.lang-choose .link-text').click(function(){
+		$(this).parent().find('.chosen').removeClass('chosen')
+		$(this).addClass('chosen')
+	})
+
+	$('.arrival-date').pickmeup({
 		position: 'bottom',
 		hide_on_select: true,
 		prev: '',
@@ -380,23 +378,19 @@ $(document).ready(function(){
 			var $arrivalDate, $arrivalDateOutput
 
 			$arrivalDate=$('.arrival-date')
-			$arrivalDateOutput=$arrivalDate.find('.arrival-date-output')
-			$arrivalDateOutput.html($arrivalDate.pickmeup('get_date', 'd/m/Y'))
+
+			$arrivalDate.find('.arrival-date-output').html($arrivalDate.pickmeup('get_date', 'd/m/Y'))
 		},
 		fill: function(){
 			var $arrivalDate, $arrivalDateOutput
 
 			$arrivalDate=$('.arrival-date')
-			$arrivalDateOutput=$arrivalDate.find('.arrival-date-output')
-			$arrivalDateOutput.html($arrivalDate.pickmeup('get_date', 'd/m/Y'))
+
+			$arrivalDate.find('.arrival-date-output').html($arrivalDate.pickmeup('get_date', 'd/m/Y'))
 		},
 		show: function(){
-			var $pickmeup, $arrivalDateArrow
-
-			$pickmeup=$('.pickmeup')
-			$arrivalDateArrow=$('.arrival-date .arrow-up')
-			$pickmeup.css({'display': 'block'})
-			$arrivalDateArrow.addClass('open')
+			$('.pickmeup').css({'display': 'block'})
+			$('.arrival-date .arrow-up').addClass('open')
 			navExpanders.nights.hide()
 			navExpanders.reply.hide()
 			states.pickmeupHideAllowed=false
@@ -405,13 +399,10 @@ $(document).ready(function(){
 			}, transitionDuration)
 		},
 		hide: function(){
-			var $pickmeup, $arrivalDateArrow
-			$pickmeup=$('.pickmeup')
-			$arrivalDateArrow=$('.arrival-date .arrow-up')
-			$arrivalDateArrow.removeClass('open')
+			$('.arrival-date .arrow-up').removeClass('open')
 			if(states.pickmeupHideAllowed){
 				setTimeout(function(){
-					$pickmeup.css({'display': 'none'})
+					$('.pickmeup').css({'display': 'none'})
 				}, transitionDuration)
 			}
 		}

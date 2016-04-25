@@ -107,22 +107,28 @@ html
 								span.link-text-wrap
 									a(href='#').link-text Contact
 										span.link-icon
+							.link-special
+								span.link-special-text-wrap.lang-choose
+									a(href='#').link-text.chosen EN
+									a(href='#').link-text UA
+									a(href='#').link-text RU
 					.booking-bar.col-lg-6.col-md-9.pull-right
 						.container-fluid
 							.selects-wrap.col-lg-8.col-md-8
 								span.arrival-date.col-xs-6
-									span Arrival date: 
+									span.inner-text Arrival date: 
 										span.arrival-date-output 00/00/0000
 										span.trending-down
 									span.arrow-up
 								span.nights.col-xs-6
-									span Number of nights: 
+									span.inner-text Number of nights: 
 										span.nights-output 1
 										span.trending-down
 							.book-wrap.col-lg-4.col-md-4
 								.inner-wrap
 									.arrow-right
-									span Book your stay
+									span.text-wrap
+										span Book your stay
 			.main-slider.row
 				.slide
 					.overlay
@@ -312,7 +318,6 @@ html
 							.inner-wrap
 								span.icon-wrap
 									.icon.weather
-								//img(src='./images/icons/weather.svg')
 								span.temperature
 									span.width-setter 999
 									span.c-value.open -6
@@ -328,7 +333,7 @@ html
 					.col.col-rights.col-xs-5.col-sm-4
 						span All right reserved
 					.col.col-slide.col-xs-2.col-sm-4
-						span#footer-up(src='./images/icons/trending-up-orange.svg')
+						span#footer-up
 					.col.col-devs.col-xs-5.col-sm-4
 						a
 							span Made with passion by
